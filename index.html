@@ -3,44 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hello World</title>
+  <title>Bailey Cranes — Hello World</title>
   <style>
     :root {
-      color-scheme: light dark;
+      --navy: #0B2A4A;
+      --navy-deep: #061a30;
+      --red: #C8102E;
+      --white: #F8FAFC;
+      --gray: #9FB3C8;
     }
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       margin: 0;
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      color: #f8fafc;
-    }
-    main {
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at 50% 20%, var(--navy) 0%, var(--navy-deep) 70%);
+      color: var(--white);
       text-align: center;
       padding: 2rem;
     }
+    main {
+      max-width: 640px;
+      width: 100%;
+    }
+    .chevron {
+      width: clamp(88px, 22vw, 140px);
+      height: auto;
+      margin-bottom: 1.75rem;
+      filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
+      animation: lift 3.2s ease-in-out infinite;
+    }
+    @keyframes lift {
+      0%, 100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .chevron { animation: none; }
+    }
     h1 {
-      font-size: clamp(2.5rem, 8vw, 5rem);
-      margin: 0 0 0.5rem;
+      font-size: clamp(2.5rem, 9vw, 5rem);
+      margin: 0 0 0.4rem;
       letter-spacing: -0.02em;
+      font-weight: 800;
     }
-    p {
-      font-size: clamp(1rem, 3vw, 1.25rem);
+    .wordmark {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.4rem;
+      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin: 0 0 1.25rem;
+    }
+    .wordmark .cranes { color: var(--red); }
+    .divider {
+      width: 64px;
+      height: 4px;
+      background: var(--red);
+      border: none;
+      margin: 0 auto 1.25rem;
+      border-radius: 2px;
+    }
+    .tagline {
+      font-size: clamp(0.95rem, 3vw, 1.2rem);
+      color: var(--gray);
       margin: 0;
-      color: #94a3b8;
+      letter-spacing: 0.02em;
     }
+    .tagline strong { color: var(--white); font-weight: 600; }
   </style>
 </head>
 <body>
   <main>
+    <!-- Bailey chevron mark: bold double-chevron pointing up, evoking lift + rank -->
+    <svg class="chevron" viewBox="0 0 100 96" role="img" aria-label="Bailey Cranes chevron">
+      <polygon points="50,0 100,34 78,34 50,15 22,34 0,34" fill="#C8102E"/>
+      <polygon points="50,40 100,74 78,74 50,55 22,74 0,74" fill="#F8FAFC"/>
+    </svg>
+    <div class="wordmark">Bailey&nbsp;<span class="cranes">Cranes</span></div>
     <h1>Hello, World!</h1>
-    <p>Welcome to engineering-standards.</p>
+    <hr class="divider">
+    <p class="tagline"><strong>Safety Engineered. Performance Delivered.</strong></p>
   </main>
 </body>
 </html>
