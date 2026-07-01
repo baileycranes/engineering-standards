@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="build" content="20260701-134415">
+  <meta name="build" content="20260701-134900">
   <title>Bailey — Engineering Standards</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -304,7 +304,7 @@
       Array.prototype.forEach.call(navList.querySelectorAll('a'), function (a) {
         a.classList.toggle('active', a.getAttribute('data-id') === id);
       });
-      if (!document.body.classList.contains('filtering')) openGroup(GROUP_OF[id], true);
+      if (!document.body.classList.contains('filtering')) openGroup(GROUP_OF[id], false);
       document.body.classList.remove('nav-open');
       window.scrollTo(0, 0);
       var active = navList.querySelector('a.active');
@@ -313,15 +313,12 @@
     window.addEventListener('hashchange', render);
     render();
 
-    /* ---------- accordion (one chapter open at a time) ---------- */
+    /* ---------- collapsible chapters (independent toggles) ---------- */
     Array.prototype.forEach.call(navList.querySelectorAll('.grp-title'), function (btn) {
       btn.addEventListener('click', function () {
         if (document.body.classList.contains('filtering')) return;
         var gi = +btn.getAttribute('data-g');
-        var el = navList.querySelector(".nav-group[data-g='" + gi + "']");
-        var wasCollapsed = el.classList.contains('collapsed');
-        Array.prototype.forEach.call(navList.querySelectorAll('.nav-group'), function (g) { g.classList.add('collapsed'); });
-        if (wasCollapsed) el.classList.remove('collapsed');
+        navList.querySelector(".nav-group[data-g='" + gi + "']").classList.toggle('collapsed');
       });
     });
 
@@ -347,7 +344,7 @@
 
     /* ---------- auto-update on deploy ---------- */
     (function () {
-      var CURRENT = "20260701-134415";
+      var CURRENT = "20260701-134900";
       async function check() {
         try {
           var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
