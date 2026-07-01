@@ -3,14 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bailey Cranes — Hello World</title>
+  <meta name="build" content="20260701-133242">
+  <title>Bailey — Hello World</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy: #0B2A4A;
-      --navy-deep: #061a30;
-      --red: #C8102E;
-      --white: #F8FAFC;
-      --gray: #9FB3C8;
+      --red: #E30613;
+      --ink: #101010;
+      --paper: #F4F2EE;
+      --white: #FFFFFF;
+      --n400: #8C8C8C;
+      --n500: #757575;
+      --sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; }
@@ -20,75 +27,119 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(circle at 50% 20%, var(--navy) 0%, var(--navy-deep) 70%);
+      font-family: var(--sans);
+      background: var(--ink);
       color: var(--white);
       text-align: center;
       padding: 2rem;
     }
-    main {
-      max-width: 640px;
-      width: 100%;
+    /* signature red top stripe */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0 0 auto 0;
+      height: 8px;
+      background: var(--red);
+      z-index: 10;
     }
-    .chevron {
-      width: clamp(88px, 22vw, 140px);
-      height: auto;
+    main { max-width: 680px; width: 100%; }
+    .mark {
+      height: clamp(96px, 22vw, 132px);
+      width: auto;
+      color: var(--red);
       margin-bottom: 1.75rem;
-      filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
-      animation: lift 3.2s ease-in-out infinite;
+      animation: lift 3.4s ease-in-out infinite;
     }
     @keyframes lift {
       0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-10px); }
+      50%      { transform: translateY(-9px); }
     }
-    @media (prefers-reduced-motion: reduce) {
-      .chevron { animation: none; }
+    @media (prefers-reduced-motion: reduce) { .mark { animation: none; } }
+    .kicker {
+      font-family: var(--mono);
+      font-size: clamp(10px, 2.6vw, 13px);
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--white);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1.4rem;
+    }
+    .kicker::before {
+      content: "";
+      width: 30px;
+      height: 2px;
+      background: var(--red);
     }
     h1 {
-      font-size: clamp(2.5rem, 9vw, 5rem);
-      margin: 0 0 0.4rem;
-      letter-spacing: -0.02em;
-      font-weight: 800;
-    }
-    .wordmark {
-      display: inline-flex;
-      align-items: baseline;
-      gap: 0.4rem;
-      font-size: clamp(1.1rem, 4vw, 1.5rem);
+      font-family: var(--sans);
       font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
+      font-size: clamp(2.6rem, 10vw, 5.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.02em;
       margin: 0 0 1.25rem;
     }
-    .wordmark .cranes { color: var(--red); }
-    .divider {
-      width: 64px;
-      height: 4px;
-      background: var(--red);
-      border: none;
-      margin: 0 auto 1.25rem;
-      border-radius: 2px;
-    }
     .tagline {
-      font-size: clamp(0.95rem, 3vw, 1.2rem);
-      color: var(--gray);
+      font-family: var(--mono);
+      font-size: clamp(0.8rem, 3vw, 1rem);
+      letter-spacing: 0.1em;
+      color: var(--red);
+      font-weight: 700;
+      text-transform: uppercase;
       margin: 0;
+    }
+    .sub {
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      color: var(--n400);
+      margin: 1rem 0 0;
+    }
+    .foot {
+      position: fixed;
+      bottom: 22px;
+      left: 0; right: 0;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: 15px;
       letter-spacing: 0.02em;
     }
-    .tagline strong { color: var(--white); font-weight: 600; }
+    .foot b { color: var(--red); }
   </style>
 </head>
 <body>
   <main>
-    <!-- Bailey chevron mark: bold double-chevron pointing up, evoking lift + rank -->
-    <svg class="chevron" viewBox="0 0 100 96" role="img" aria-label="Bailey Cranes chevron">
-      <polygon points="50,0 100,34 78,34 50,15 22,34 0,34" fill="#C8102E"/>
-      <polygon points="50,40 100,74 78,74 50,55 22,74 0,74" fill="#F8FAFC"/>
+    <!-- Bailey mark (official vector, from the Bailey Design System) -->
+    <svg class="mark" viewBox="0 0 447 695" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Bailey">
+      <path d="M 445.789 257.419 L 0 0 L 0 141.546 L 75.412 185.089 L 75.412 130.635 L 296.858 258.508 L 223.394 302.374 L 222.858 302.076 L 147.96 346.748 L 148.539 347.07 L 75.412 390.734 L 75.412 306.461 L 117.408 329.782 L 192.306 285.109 L 109.309 239.018 L 109.075 239.424 L 84.808 225.412 L 75.412 220.194 L 75.412 219.987 L 0 176.444 L 0 521.484 L 107.504 459.411 L 215.019 395.213 L 214.816 394.872 L 350.626 313.869 L 350.79 314.144 L 445.789 257.419 Z"></path>
+      <path d="M 329.814 361.471 L 254.915 406.144 L 296.024 428.973 L 75.412 561.786 L 75.412 512.839 L 0 556.382 L 0 695.215 L 446.623 426.339 L 329.814 361.471 Z"></path>
     </svg>
-    <div class="wordmark">Bailey&nbsp;<span class="cranes">Cranes</span></div>
+    <div class="kicker">Bailey&nbsp;Cranes &nbsp;·&nbsp; Engineering&nbsp;Standards</div>
     <h1>Hello, World!</h1>
-    <hr class="divider">
-    <p class="tagline"><strong>Safety Engineered. Performance Delivered.</strong></p>
+    <p class="tagline">Safety Engineered. Performance Delivered.</p>
+    <p class="sub">Engineered to lift.</p>
   </main>
+
+  <div class="foot">baileycranes<b>.</b>com</div>
+
+  <script>
+    // Auto-update on deploy: quietly poll the deployed page and reload
+    // ONLY when a new build is published (no constant jarring refresh).
+    (function () {
+      var CURRENT = "20260701-133242";
+      async function check() {
+        try {
+          var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
+          if (!res.ok) return;
+          var txt = await res.text();
+          var m = txt.match(/name="build" content="([^"]+)"/);
+          if (m && m[1] !== CURRENT) location.reload();
+        } catch (e) { /* offline or transient — try again next tick */ }
+      }
+      setInterval(check, 20000);
+    })();
+  </script>
 </body>
 </html>
