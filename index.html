@@ -3,132 +3,314 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="build" content="20260701-133242">
-  <title>Bailey — Hello World</title>
+  <meta name="build" content="20260701-133755">
+  <title>Bailey — Engineering Standards</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --red: #E30613;
       --ink: #101010;
       --paper: #F4F2EE;
       --white: #FFFFFF;
+      --n150: #E6E6E6;
+      --n200: #D9D9D9;
+      --n300: #B8B8B8;
       --n400: #8C8C8C;
       --n500: #757575;
+      --n600: #555555;
+      --n700: #3A3A3A;
       --sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --bar-h: 60px;
+      --nav-w: 300px;
     }
     * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    html, body { height: 100%; margin: 0; }
     body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       font-family: var(--sans);
-      background: var(--ink);
-      color: var(--white);
-      text-align: center;
-      padding: 2rem;
+      color: var(--ink);
+      background: var(--paper);
+      -webkit-font-smoothing: antialiased;
     }
-    /* signature red top stripe */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0 0 auto 0;
-      height: 8px;
-      background: var(--red);
-      z-index: 10;
+    a { color: var(--red); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ---------- app bar ---------- */
+    .bar {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--bar-h);
+      background: var(--ink); color: var(--white);
+      display: flex; align-items: center; gap: 14px;
+      padding: 0 20px; z-index: 30;
     }
-    main { max-width: 680px; width: 100%; }
-    .mark {
-      height: clamp(96px, 22vw, 132px);
-      width: auto;
-      color: var(--red);
-      margin-bottom: 1.75rem;
-      animation: lift 3.4s ease-in-out infinite;
+    .bar::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--red); }
+    .bar .mark { height: 30px; width: auto; color: var(--red); flex: none; }
+    .bar .brand { font-family: var(--sans); font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+    .bar .brand .sub { color: var(--n400); font-weight: 500; }
+    .bar .spacer { flex: 1; }
+    .bar .tag {
+      font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--n400); white-space: nowrap;
     }
-    @keyframes lift {
-      0%, 100% { transform: translateY(0); }
-      50%      { transform: translateY(-9px); }
+    .menu-btn {
+      display: none; background: none; border: 1px solid var(--n700); color: var(--white);
+      width: 38px; height: 34px; border-radius: 4px; cursor: pointer; font-size: 16px; flex: none;
     }
-    @media (prefers-reduced-motion: reduce) { .mark { animation: none; } }
+
+    /* ---------- layout ---------- */
+    .nav {
+      position: fixed; top: var(--bar-h); bottom: 0; left: 0; width: var(--nav-w);
+      background: var(--white); border-right: 1px solid var(--n200);
+      overflow-y: auto; padding: 18px 0 40px; z-index: 20;
+    }
+    .filter-wrap { padding: 0 18px 12px; }
+    .filter {
+      width: 100%; font-family: var(--mono); font-size: 12px; padding: 9px 10px;
+      border: 1px solid var(--n200); border-radius: 4px; background: var(--paper); color: var(--ink);
+    }
+    .filter:focus { outline: none; border-color: var(--red); }
+    .nav-group { margin-top: 6px; }
+    .nav-group > .grp-title {
+      font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--n500); padding: 14px 18px 6px;
+    }
+    .nav a {
+      display: flex; align-items: baseline; gap: 8px;
+      padding: 7px 18px 7px 22px; color: var(--n700); font-size: 14px; line-height: 1.3;
+      border-left: 3px solid transparent;
+    }
+    .nav a .num { font-family: var(--mono); font-size: 11px; color: var(--n400); flex: none; }
+    .nav a:hover { background: var(--paper); text-decoration: none; }
+    .nav a.active { color: var(--ink); font-weight: 600; border-left-color: var(--red); background: var(--paper); }
+    .nav a.active .num { color: var(--red); }
+
+    .content {
+      margin-left: var(--nav-w); padding: calc(var(--bar-h) + 40px) 7vw 96px;
+      max-width: 900px;
+    }
+    .backdrop { display: none; }
+
+    /* ---------- article ---------- */
     .kicker {
-      font-family: var(--mono);
-      font-size: clamp(10px, 2.6vw, 13px);
-      font-weight: 500;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--white);
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 1.4rem;
+      font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red); margin: 0 0 10px;
+      display: inline-flex; align-items: center; gap: 10px;
     }
-    .kicker::before {
-      content: "";
-      width: 30px;
-      height: 2px;
-      background: var(--red);
+    .kicker::before { content: ""; width: 26px; height: 2px; background: var(--red); }
+    .badge {
+      font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--n600); background: var(--n150); border: 1px solid var(--n200); padding: 3px 8px; border-radius: 3px;
+      vertical-align: middle; margin-left: 10px;
     }
-    h1 {
-      font-family: var(--sans);
-      font-weight: 700;
-      font-size: clamp(2.6rem, 10vw, 5.5rem);
-      line-height: 0.98;
-      letter-spacing: -0.02em;
-      margin: 0 0 1.25rem;
+    article h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.02; margin: 4px 0 6px; }
+    article h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; margin: 2.2rem 0 0.6rem; }
+    article p, article li { font-size: 1.02rem; line-height: 1.62; color: var(--n700); }
+    article ul { padding-left: 1.2rem; }
+    article li { margin: 0.3rem 0; }
+    article code {
+      font-family: var(--mono); font-size: 0.86em; background: var(--white);
+      border: 1px solid var(--n200); border-radius: 3px; padding: 1px 6px;
     }
-    .tagline {
-      font-family: var(--mono);
-      font-size: clamp(0.8rem, 3vw, 1rem);
-      letter-spacing: 0.1em;
-      color: var(--red);
-      font-weight: 700;
-      text-transform: uppercase;
-      margin: 0;
+    article blockquote {
+      margin: 1.2rem 0; padding: 12px 18px; background: var(--white);
+      border-left: 3px solid var(--red); color: var(--n600); font-size: 0.98rem;
     }
-    .sub {
-      font-family: var(--sans);
-      font-weight: 400;
-      font-size: clamp(0.9rem, 3vw, 1.1rem);
-      color: var(--n400);
-      margin: 1rem 0 0;
+    .lead { font-size: 1.15rem; color: var(--n600); line-height: 1.55; }
+    .refs { font-family: var(--mono); font-size: 12px; color: var(--n500); }
+    .refs span { display: inline-block; border: 1px solid var(--n200); background: var(--white); padding: 3px 8px; margin: 3px 4px 0 0; }
+
+    /* prev / next */
+    .pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 56px; border-top: 1px solid var(--n200); padding-top: 22px; }
+    .pager a { flex: 1; padding: 14px 16px; border: 1px solid var(--n200); background: var(--white); border-radius: 5px; color: var(--ink); }
+    .pager a:hover { border-color: var(--red); text-decoration: none; }
+    .pager .dir { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--n400); display: block; margin-bottom: 4px; }
+    .pager a.next { text-align: right; }
+    .pager a.disabled { visibility: hidden; }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 860px) {
+      .menu-btn { display: block; }
+      .bar .tag { display: none; }
+      .nav { transform: translateX(-100%); transition: transform 0.22s ease; box-shadow: 0 0 40px rgba(0,0,0,0.2); }
+      body.nav-open .nav { transform: translateX(0); }
+      body.nav-open .backdrop { display: block; position: fixed; inset: var(--bar-h) 0 0 0; background: rgba(16,16,16,0.4); z-index: 15; }
+      .content { margin-left: 0; padding: calc(var(--bar-h) + 28px) 24px 80px; }
     }
-    .foot {
-      position: fixed;
-      bottom: 22px;
-      left: 0; right: 0;
-      font-family: var(--sans);
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: 0.02em;
-    }
-    .foot b { color: var(--red); }
+    @media (prefers-reduced-motion: reduce) { .nav { transition: none; } }
   </style>
 </head>
 <body>
-  <main>
-    <!-- Bailey mark (official vector, from the Bailey Design System) -->
+  <header class="bar">
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
     <svg class="mark" viewBox="0 0 447 695" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-label="Bailey">
       <path d="M 445.789 257.419 L 0 0 L 0 141.546 L 75.412 185.089 L 75.412 130.635 L 296.858 258.508 L 223.394 302.374 L 222.858 302.076 L 147.96 346.748 L 148.539 347.07 L 75.412 390.734 L 75.412 306.461 L 117.408 329.782 L 192.306 285.109 L 109.309 239.018 L 109.075 239.424 L 84.808 225.412 L 75.412 220.194 L 75.412 219.987 L 0 176.444 L 0 521.484 L 107.504 459.411 L 215.019 395.213 L 214.816 394.872 L 350.626 313.869 L 350.79 314.144 L 445.789 257.419 Z"></path>
       <path d="M 329.814 361.471 L 254.915 406.144 L 296.024 428.973 L 75.412 561.786 L 75.412 512.839 L 0 556.382 L 0 695.215 L 446.623 426.339 L 329.814 361.471 Z"></path>
     </svg>
-    <div class="kicker">Bailey&nbsp;Cranes &nbsp;·&nbsp; Engineering&nbsp;Standards</div>
-    <h1>Hello, World!</h1>
-    <p class="tagline">Safety Engineered. Performance Delivered.</p>
-    <p class="sub">Engineered to lift.</p>
-  </main>
+    <div class="brand">Bailey <span class="sub">/ Engineering Standards</span></div>
+    <div class="spacer"></div>
+    <div class="tag">Safety Engineered · Performance Delivered</div>
+  </header>
 
-  <div class="foot">baileycranes<b>.</b>com</div>
+  <nav class="nav" id="nav">
+    <div class="filter-wrap"><input class="filter" id="filter" type="search" placeholder="Filter standards…" aria-label="Filter standards"></div>
+    <div id="navList"></div>
+  </nav>
+  <div class="backdrop" id="backdrop"></div>
+
+  <main class="content"><article id="article"></article></main>
 
   <script>
-    // Auto-update on deploy: quietly poll the deployed page and reload
-    // ONLY when a new build is published (no constant jarring refresh).
+    /* ============================================================
+       Engineering Standards — content model.
+       FIRST CUT / DRAFT skeleton. Each section is a stub to be
+       replaced with the finalized standards. Cross-links use
+       href="#/<id>" so the whole handbook is interlinked.
+       ============================================================ */
+    var GROUPS = [
+      { title: "Overview", items: [
+        { id: "purpose", title: "Purpose & Scope", body:
+          "<p class='lead'>The Bailey Engineering Standards define how we design, analyze, build, and verify precision lifting and crane systems for mission-critical environments.</p>" +
+          "<h2>Why this exists</h2><p>A single source of truth so every engineer, drawing, and part meets the same bar — <em>Safety Engineered. Performance Delivered.</em></p>" +
+          "<h2>Scope</h2><ul>" +
+          "<li>All product engineering: <a href='#/structural'>structural design</a>, <a href='#/loads'>load ratings</a>, <a href='#/materials'>materials</a>, and <a href='#/welding'>fabrication</a>.</li>" +
+          "<li>The full lifecycle — from <a href='#/requirements'>requirements</a> through <a href='#/testing'>proof-load testing</a> and <a href='#/traceability'>records</a>.</li>" +
+          "</ul><blockquote>Draft skeleton — pending the finalized standards from our working discussion.</blockquote>" },
+        { id: "how-to-use", title: "How to Use This Handbook", body:
+          "<p>Navigate with the table of contents on the left. Every standard is interlinked — click any cross-reference to jump, like a wiki.</p>" +
+          "<h2>Conventions</h2><ul><li><strong>MUST / SHALL</strong> — mandatory.</li><li><strong>SHOULD</strong> — strongly recommended; deviations require sign-off per <a href='#/governance'>Governance</a>.</li><li><strong>MAY</strong> — optional.</li></ul>" },
+        { id: "governance", title: "Governance & Revision Control", body:
+          "<h2>Ownership</h2><p>Standards are owned by Engineering leadership. Changes flow through <a href='#/change-mgmt'>Change Management</a> and are logged in the <a href='#/revision-history'>Revision History</a>.</p>" +
+          "<h2>Deviations</h2><p>Any deviation from a <code>SHALL</code> requires a documented waiver and design-review approval (<a href='#/design-reviews'>Design Reviews</a>).</p>" },
+      ]},
+      { title: "Design", items: [
+        { id: "design-principles", title: "Design Principles & Safety Factors", body:
+          "<h2>Principles</h2><ul><li>Design for the worst-case duty cycle and environment.</li><li>Fail-safe over fail-operational where life safety is involved.</li><li>Traceable analysis behind every rated number (<a href='#/analysis'>Analysis</a>).</li></ul>" +
+          "<h2>Safety factors</h2><p>Minimum design factors align with <code>ASME B30</code> and applicable duty classifications. See <a href='#/loads'>Load Ratings</a>.</p>" +
+          "<p class='refs'><span>ASME B30</span><span>AISC 360</span><span>ANSI MH27</span></p>" },
+        { id: "structural", title: "Structural Design", body:
+          "<h2>Basis</h2><p>Structural members are sized to <code>AISC 360</code> with fatigue considered per duty class. Welds per <a href='#/welding'>Welding Standards</a>; materials per <a href='#/materials'>Materials Selection</a>.</p>" +
+          "<h2>Requirements</h2><ul><li>Deflection limits SHALL be defined per application.</li><li>Fatigue-critical joints SHALL be identified on drawings.</li></ul>" },
+        { id: "loads", title: "Load Ratings & Capacity", body:
+          "<h2>Rated capacity</h2><p>Every product carries a documented rated capacity derived from <a href='#/analysis'>analysis</a> and confirmed by <a href='#/testing'>proof-load test</a>.</p>" +
+          "<ul><li>Dynamic and impact factors SHALL be applied per duty class.</li><li>Load charts MUST be traceable to the governing calculation.</li></ul>" },
+        { id: "materials", title: "Materials Selection", body:
+          "<h2>Approved materials</h2><p>Structural steels, alloys, and coatings from the approved materials list. Substitutions require review per <a href='#/governance'>Governance</a>.</p>" +
+          "<ul><li>Mill certs required for load-bearing members (<a href='#/traceability'>Traceability</a>).</li><li>Corrosion protection per <a href='#/coatings'>Coatings</a>.</li></ul>" },
+        { id: "fasteners", title: "Fasteners & Hardware", body:
+          "<h2>Standards</h2><p>Grades, torque, and preload per application. Critical fasteners SHALL be specified with torque and locking method on the drawing.</p><p class='refs'><span>ASTM A325 / F3125</span><span>ISO 898</span></p>" },
+        { id: "tolerances", title: "Tolerances & Fits (GD&T)", body:
+          "<h2>GD&T</h2><p>Geometric dimensioning &amp; tolerancing per <code>ASME Y14.5</code>. Default tolerances defined in the title block; see <a href='#/drawings'>Drawing Standards</a>.</p>" },
+      ]},
+      { title: "Engineering Process", items: [
+        { id: "requirements", title: "Requirements & Specification", body:
+          "<h2>Capture</h2><p>Each project begins with a written requirements spec — duty, environment, capacity, interfaces, compliance. Feeds <a href='#/design-reviews'>Design Reviews</a>.</p>" },
+        { id: "design-reviews", title: "Design Reviews & Stage Gates", body:
+          "<h2>Gates</h2><ul><li>Concept → Preliminary → Critical Design Review → Release.</li><li>Each gate has entry/exit criteria and a sign-off.</li></ul><p>Findings tracked to closure before <a href='#/change-mgmt'>release</a>.</p>" },
+        { id: "analysis", title: "Calculations & Analysis (FEA)", body:
+          "<h2>Analysis</h2><p>Hand calcs and FEA SHALL be documented, reviewed, and archived (<a href='#/traceability'>Traceability</a>). Assumptions and boundary conditions recorded.</p>" },
+        { id: "change-mgmt", title: "Change Management (ECO)", body:
+          "<h2>Engineering Change Order</h2><p>Released designs change only via ECO: impact assessment, approval, revised <a href='#/drawings'>drawings</a>, and <a href='#/revision-history'>revision log</a> entry.</p>" },
+      ]},
+      { title: "Drawings & Data", items: [
+        { id: "cad", title: "CAD & Modeling Standards", body: "<h2>Modeling</h2><p>Consistent model tree, units, datums, and origin. Master models drive <a href='#/drawings'>drawings</a> and <a href='#/part-numbering'>BOMs</a>.</p>" },
+        { id: "drawings", title: "Drawing Standards", body: "<h2>Sheets</h2><p>Standard title block, revision block, and notes. Dimensioning per <a href='#/tolerances'>GD&T</a>. Welds called out per <a href='#/welding'>Welding</a>.</p>" },
+        { id: "part-numbering", title: "Part Numbering & BOM", body: "<h2>Numbering</h2><p>Structured, non-significant part numbers with a controlled BOM. See <a href='#/naming'>Naming Conventions</a>.</p>" },
+        { id: "naming", title: "File & Naming Conventions", body: "<h2>Files</h2><p>Consistent file and revision naming so any artifact is findable and traceable.</p>" },
+      ]},
+      { title: "Manufacturing", items: [
+        { id: "welding", title: "Welding Standards", body:
+          "<h2>Basis</h2><p>Structural welding per <code>AWS D1.1</code>. Qualified procedures (WPS) and welders. Weld symbols on <a href='#/drawings'>drawings</a>; inspection per <a href='#/ndt'>NDT</a>.</p><p class='refs'><span>AWS D1.1</span></p>" },
+        { id: "machining", title: "Machining & Fabrication", body: "<h2>Fabrication</h2><p>Process controls, surface finish, and edge prep to drawing. Fits per <a href='#/tolerances'>Tolerances</a>.</p>" },
+        { id: "assembly", title: "Assembly", body: "<h2>Assembly</h2><p>Work instructions, torque specs (<a href='#/fasteners'>Fasteners</a>), and in-process <a href='#/inspection'>inspection</a> checkpoints.</p>" },
+        { id: "coatings", title: "Surface Treatment & Coatings", body: "<h2>Protection</h2><p>Surface prep and coating systems matched to the service environment (<a href='#/materials'>Materials</a>).</p>" },
+      ]},
+      { title: "Quality & Safety", items: [
+        { id: "inspection", title: "Inspection & Acceptance", body: "<h2>Acceptance</h2><p>Dimensional and visual inspection against drawings; nonconformances dispositioned and recorded (<a href='#/traceability'>Traceability</a>).</p>" },
+        { id: "testing", title: "Testing & Proof Load", body: "<h2>Proof load</h2><p>Rated products SHALL pass a documented proof-load test before shipment, tied to the governing <a href='#/loads'>load rating</a>.</p>" },
+        { id: "ndt", title: "Non-Destructive Testing", body: "<h2>NDT</h2><p>Method (VT/MT/PT/UT) and acceptance per weld criticality (<a href='#/welding'>Welding</a>). Performed by qualified personnel.</p>" },
+        { id: "safety", title: "Safety Engineering", body:
+          "<h2>Safety first</h2><p>Our defining principle: <em>failure is not an option</em>. Hazard analysis and risk assessment are built into <a href='#/design-reviews'>design reviews</a>.</p>" },
+        { id: "compliance", title: "Compliance & Certifications", body:
+          "<h2>Compliance</h2><p>Products meet applicable OSHA/ANSI/ASME requirements. Bailey is a Service-Disabled Veteran-Owned manufacturer; QMS aligned to <code>ISO 9001</code>.</p><p class='refs'><span>OSHA 1910</span><span>ANSI</span><span>ASME B30</span><span>ISO 9001</span></p>" },
+        { id: "traceability", title: "Traceability & Records", body: "<h2>Records</h2><p>Material certs, calcs, inspection, and test records retained per policy so any rated product is fully traceable.</p>" },
+      ]},
+      { title: "Reference", items: [
+        { id: "standards-index", title: "Referenced Standards Index", body:
+          "<h2>External standards referenced</h2><p class='refs'><span>ASME B30</span><span>ASME Y14.5</span><span>AISC 360</span><span>AWS D1.1</span><span>ASTM F3125</span><span>ISO 898</span><span>ISO 9001</span><span>OSHA 1910</span><span>ANSI MH27</span></p><blockquote>Confirm exact editions/years during finalization.</blockquote>" },
+        { id: "glossary", title: "Glossary", body: "<h2>Terms</h2><ul><li><strong>Duty class</strong> — expected load/usage severity.</li><li><strong>Rated capacity</strong> — maximum load a product is certified to handle.</li><li><strong>WPS</strong> — Welding Procedure Specification.</li></ul>" },
+        { id: "revision-history", title: "Revision History", body: "<h2>Revisions</h2><ul><li><strong>Rev —</strong> First-cut skeleton table of contents. Content pending finalized standards.</li></ul>" },
+      ]},
+    ];
+
+    /* ---------- render ---------- */
+    var FLAT = [];
+    GROUPS.forEach(function (g) { g.items.forEach(function (it) { FLAT.push(it); }); });
+    var INDEX = {}; FLAT.forEach(function (it, i) { INDEX[it.id] = i; });
+    var FIRST = FLAT[0].id;
+
+    var navList = document.getElementById('navList');
+    (function buildNav() {
+      var n = 0, html = "";
+      GROUPS.forEach(function (g) {
+        html += "<div class='nav-group'><div class='grp-title'>" + g.title + "</div>";
+        g.items.forEach(function (it) {
+          n++;
+          var num = (n < 10 ? "0" : "") + n;
+          html += "<a href='#/" + it.id + "' data-id='" + it.id + "' data-title='" + it.title.toLowerCase() + "'>" +
+                  "<span class='num'>" + num + "</span><span class='lbl'>" + it.title + "</span></a>";
+        });
+        html += "</div>";
+      });
+      navList.innerHTML = html;
+    })();
+
+    var article = document.getElementById('article');
+    function currentId() {
+      var h = location.hash.replace(/^#\/?/, '').trim();
+      return INDEX.hasOwnProperty(h) ? h : FIRST;
+    }
+    function pagerLink(cls, dir, it) {
+      if (!it) return "<a class='" + cls + " disabled'></a>";
+      return "<a class='" + cls + "' href='#/" + it.id + "'><span class='dir'>" + dir + "</span>" + it.title + "</a>";
+    }
+    function render() {
+      var id = currentId(), i = INDEX[id], it = FLAT[i];
+      document.title = "Bailey — " + it.title;
+      article.innerHTML =
+        "<div class='kicker'>Engineering Standards</div>" +
+        "<h1>" + it.title + "<span class='badge'>Draft</span></h1>" +
+        it.body +
+        "<div class='pager'>" +
+        pagerLink("prev", "Previous", FLAT[i - 1]) +
+        pagerLink("next", "Next", FLAT[i + 1]) +
+        "</div>";
+      Array.prototype.forEach.call(navList.querySelectorAll('a'), function (a) {
+        a.classList.toggle('active', a.getAttribute('data-id') === id);
+      });
+      document.body.classList.remove('nav-open');
+      window.scrollTo(0, 0);
+      var active = navList.querySelector('a.active');
+      if (active) active.scrollIntoView({ block: 'nearest' });
+    }
+    window.addEventListener('hashchange', render);
+    render();
+
+    /* ---------- filter ---------- */
+    document.getElementById('filter').addEventListener('input', function (e) {
+      var q = e.target.value.toLowerCase().trim();
+      Array.prototype.forEach.call(navList.querySelectorAll('a'), function (a) {
+        a.style.display = a.getAttribute('data-title').indexOf(q) > -1 ? '' : 'none';
+      });
+    });
+
+    /* ---------- mobile drawer ---------- */
+    document.getElementById('menuBtn').addEventListener('click', function () { document.body.classList.toggle('nav-open'); });
+    document.getElementById('backdrop').addEventListener('click', function () { document.body.classList.remove('nav-open'); });
+
+    /* ---------- auto-update on deploy ---------- */
     (function () {
-      var CURRENT = "20260701-133242";
+      var CURRENT = "20260701-133755";
       async function check() {
         try {
           var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
@@ -136,7 +318,7 @@
           var txt = await res.text();
           var m = txt.match(/name="build" content="([^"]+)"/);
           if (m && m[1] !== CURRENT) location.reload();
-        } catch (e) { /* offline or transient — try again next tick */ }
+        } catch (e) {}
       }
       setInterval(check, 20000);
     })();
