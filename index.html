@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="build" content="20260702-223555">
+  <meta name="build" content="20260702-224237">
   <title>Bailey — Engineering Design Standards</title>
   <style>
     :root {
@@ -161,47 +161,6 @@
           "<tr><td><code>4.5</code></td><td><strong>Hanomi / successor</strong> — drawing generation, last, on a clean base.</td></tr>" +
           "</tbody></table><p>Parallel track: parametric <strong>Stage-1 load-cascade</strong> automation — separate, must not block Stages 2–3.</p>" },
       ]},
-      { title: "Get Set Up", items: [
-        { id: "github-basics", n: "", title: "GitHub Basics", body:
-          "<p class='lead'>GitHub is just a website that stores software so anyone can download it. Getting started is a few clicks — no experience needed. Do each step; you'll see <strong>Success!</strong> when it worked.</p>" +
-          "<div class='step'>Step 1 — Create a free account</div>" +
-          "<ol><li>Go to <code>github.com</code>.</li><li>Click <strong>Sign up</strong> and follow the prompts.</li><li>Verify your email.</li></ol>" +
-          "<div class='ok'>Success! You can sign in at github.com.</div>" +
-          "<div class='step'>Step 2 — Open the SolidPilot page</div>" +
-          "<ol><li>Go to <code>github.com/eyfel/mcp-server-solidworks</code>.</li><li>This is <strong>SolidPilot</strong> — the tool that lets Claude work inside SolidWorks.</li></ol>" +
-          "<div class='ok'>Success! You see the SolidPilot page with a README below it.</div>" +
-          "<div class='step'>Step 3 — Star it (so it's easy to find again)</div>" +
-          "<ol><li>Click the <strong>Star</strong> button near the top-right.</li></ol>" +
-          "<div class='ok'>Success! The button now reads &ldquo;Starred.&rdquo; That's the GitHub basics done.</div>" },
-        { id: "install-solidpilot", n: "", title: "Set Up SolidPilot", body:
-          "<p class='lead'>This puts SolidPilot on your machine so Claude can talk to SolidWorks. You do it once. If a step won't cooperate, stop and tell Naveen — this is new software and a little fiddly.</p>" +
-          "<h2>Check these first</h2><ul>" +
-          "<li>A <strong>Windows</strong> PC</li><li><strong>SolidWorks 2026</strong>, licensed and opening normally</li>" +
-          "<li><strong>Claude Desktop</strong> installed</li><li>About 30 minutes</li></ul>" +
-          "<blockquote class='open'>Not on SolidWorks 2026? Pause and check with Naveen before going further.</blockquote>" +
-          "<div class='step'>Step 1 — Get the SolidPilot files</div>" +
-          "<ol><li>On the SolidPilot page, click the green <strong>Code</strong> button.</li><li>Choose <strong>Download ZIP</strong>.</li><li>Unzip it somewhere easy, like your Documents folder.</li></ol>" +
-          "<div class='ok'>Success! You have a SolidPilot folder with files inside.</div>" +
-          "<div class='step'>Step 2 — Install what it needs</div>" +
-          "<ol><li>Open the <strong>README</strong> on the SolidPilot page and find <em>Requirements</em>.</li><li>Install <strong>.NET Framework 4.8</strong> and <strong>Python 3</strong> using the links there.</li></ol>" +
-          "<div class='ok'>Success! The README's install steps finish without errors.</div>" +
-          "<div class='step'>Step 3 — Start SolidPilot</div>" +
-          "<ol><li>Follow the README to start the server. It runs quietly in the background (at <code>localhost:5000</code>).</li></ol>" +
-          "<div class='ok'>Success! The window says the server is running / listening.</div>" +
-          "<div class='step'>Step 4 — Connect it to Claude</div>" +
-          "<ol><li>Add the small settings block from the README into Claude Desktop's config file.</li><li>Restart Claude Desktop.</li></ol>" +
-          "<div class='ok'>Success! In Claude Desktop, the SolidWorks tools now show up.</div>" +
-          "<p style='color:var(--steel)'>Exact commands live in the SolidPilot README — follow those for your machine.</p>" },
-        { id: "first-test", n: "", title: "Your First Test", body:
-          "<p class='lead'>A safe, read-only test — nothing in your model gets changed.</p>" +
-          "<div class='step'>Test 1 — Say hello</div>" +
-          "<ol><li>Open any part or assembly in <strong>SolidWorks</strong>.</li><li>In <strong>Claude Desktop</strong>, type: <em>&ldquo;Are you connected to SolidWorks? Tell me the name of the open document.&rdquo;</em></li></ol>" +
-          "<div class='ok'>Success! Claude replies with your file's name. You're connected.</div>" +
-          "<div class='step'>Test 2 — Run a check</div>" +
-          "<ol><li>Type: <em>&ldquo;Run interference detection and list any clashes.&rdquo;</em> (This only looks — it changes nothing.)</li></ol>" +
-          "<div class='ok'>Success! Claude returns a result. You just ran your first check through Claude.</div>" +
-          "<blockquote>Stuck on any step? Note where you stopped and Naveen will help. Once this works, we'll add the everyday workflows.</blockquote>" },
-      ]},
       { n: 1, title: "Scope & Fundamentals", items: [
         { id: "scope-covers", n: "1.1", title: "What This Covers", body:
           "<h2>In scope</h2><p>Mechanical <strong>parts, assemblies, and drawings</strong>.</p><h2>Out of scope</h2><p>Electrical and software — covered elsewhere.</p>" +
@@ -219,18 +178,24 @@
           "<li><strong>Standard → train → enforce</strong>, in that order.</li>" +
           "<li><strong>Scope discipline</strong> — decouple cheap wins from the app.</li>" +
           "<li><strong>Compliance is non-blocking but permanently logged</strong> — see <a href='#/validator'>the validator</a>.</li>" +
-          "<li><strong>HARDEN</strong> — make each function survive without one person.</li></ul>" },
+          "<li><strong>HARDEN</strong> — make each function survive without one person.</li></ul>" +
+          "<h2>How this standard is written</h2><p>Every rule states its <strong>engineering principle</strong> (the why) and its <strong>SolidWorks realization</strong> (how it is checked or built with tools we already own). Native-first: prefer a built-in SolidWorks capability over custom code.</p>" },
       ]},
       { n: 2, title: "Drawings & Documentation", items: [
         { id: "drawing-carry", n: "2.1", title: "What Every Drawing Must Carry", body:
           "<p>Every released drawing SHALL carry:</p><ul>" +
           "<li>Title block + revision</li><li>Material (from the <a href='#/materials'>approved list</a>) and surface finish</li>" +
           "<li><strong>All</strong> manufacturing dimensions</li><li><a href='#/gdt-table'>GD&amp;T</a> per feature type</li>" +
-          "<li>Critical-dimension (<a href='#/hold-dims'>HOLD</a>) call-outs</li><li>Vendor / part number</li></ul>" },
+          "<li>Critical-dimension (<a href='#/hold-dims'>HOLD</a>) call-outs</li><li>Vendor / part number</li></ul>" +
+          "<h2>In SolidWorks</h2><ul>" +
+          "<li><strong>Design Checker</strong> verifies a drawing against a saved standard (title block, fonts, dimensioning, material) — the native basis for the automated <a href='#/validator'>validator</a>.</li>" +
+          "<li><strong>DimXpert / MBD</strong> carries dimensions and <a href='#/gdt-table'>GD&amp;T</a> on the 3D model itself.</li>" +
+          "<li><strong>Hole Wizard</strong> standardizes holes and their callouts; <strong>Weldment</strong> cut lists itemize structural members.</li></ul>" },
         { id: "drawing-format", n: "2.2", title: "Format & Layout", body:
           "<p>Consistent title block, revision block, and standard notes across all prints. Vendors set on the drawing and in SolidWorks metadata flow to NetSuite via the CAD link.</p>" },
         { id: "whole-print", n: "2.3", title: "The Missing-Dimension Checklist", body:
-          "<h2>Whole-print review</h2><p>Manual dimensioning makes it easy to miss a hole on a complex part. A <strong>whole-print review SHALL</strong> be completed before release — a systematic pass, not an ad-hoc glance. One of the phase <code>4.1</code> quick wins.</p>" },
+          "<h2>Whole-print review</h2><p>Manual dimensioning makes it easy to miss a hole on a complex part. A <strong>whole-print review SHALL</strong> be completed before release — a systematic pass, not an ad-hoc glance. One of the phase <code>4.1</code> quick wins.</p>" +
+          "<p><strong>In SolidWorks:</strong> Design Checker flags missing or non-conforming items automatically, but the engineer still owns the final whole-print pass — the tool assists judgment, it does not replace it.</p>" },
         { id: "dim-conflict", n: "2.4", title: "Design vs Manufacturing Dimensioning", body:
           "<p>Design and manufacturing dimension differently and it causes conflict:</p><ul>" +
           "<li><strong>Center-relative</strong> (design) vs <strong>ordinate-from-corner</strong> (manufacturing).</li>" +
@@ -307,6 +272,7 @@
           "<p>Rotating parts: use the two support <strong>journals as a common datum axis (A-B)</strong> for <a href='#/gdt-table'>runout</a>.</p>" +
           "<h2>Tolerance stack-up &harr; service factor</h2>" +
           "<p>Budget the position / profile bands so the <strong>worst-case stack</strong> still preserves the governing <a href='#/service-factor'>service factor (&ge; 2.75)</a>. Convert design intent to <a href='#/std-tol'>standard tolerances</a>, and call out <a href='#/hold-dims'>HOLD</a> dimensions where the stack is critical.</p>" +
+          "<p><strong>In SolidWorks:</strong> <strong>TolAnalyst</strong> (SOLIDWORKS Premium) computes worst-case and statistical (RSS) stack-ups from the DimXpert scheme — use it to prove the stack holds the service factor. <em>Verify seat licensing.</em></p>" +
           "<p>Hanomi can auto-generate GD&amp;T later from a clean 3D model &mdash; but only once this standard exists.</p>" },
       ]},
       { n: 4, title: "Materials & Fasteners", items: [
@@ -315,7 +281,8 @@
           "<table><thead><tr><th>Family</th><th>Grades</th></tr></thead><tbody>" +
           "<tr><td>Structural steel</td><td><code>Gr.50</code> · <code>Gr.80</code> · <code>Gr.100</code></td></tr>" +
           "<tr><td>Aluminum</td><td>Approved grades (to be listed)</td></tr>" +
-          "</tbody></table>" },
+          "</tbody></table>" +
+          "<p><strong>In SolidWorks:</strong> lock the approved grades into a <strong>custom material library</strong> so mass properties and Simulation pull consistent, correct properties every time.</p>" },
         { id: "service-factor", n: "4.2", title: "Service Factor → Material", body:
           "<p>Design factor <strong>≥ 2.75</strong> for a given grade. When capacity is short, climb the <strong>material ladder</strong> before adding thickness:</p>" +
           "<p><code>Gr.50 → Gr.80 → Gr.100 → thicken</code></p>" +
@@ -329,19 +296,22 @@
         { id: "hold-dims", n: "5.2", title: "Critical \"HOLD\" Dimensions", body:
           "<p>The engineer marks critical dimensions <strong>HOLD</strong> and signs off. Fabrication <strong>cannot proceed</strong> on a HOLD dimension until it is checked to tolerance — replacing \"it's the print, I'm good\" with a signature. See <a href='#/holdpoints'>Hold-Point Sign-Off</a>.</p>" },
         { id: "fits", n: "5.3", title: "Interference vs Clearance", body:
-          "<p>Define interference vs clearance intent per fit; it feeds the assembly-level <a href='#/interference'>interference check</a> and its clearance tolerance.</p>" },
+          "<p>Define interference vs clearance intent per fit; it feeds the assembly-level <a href='#/interference'>interference check</a> and its clearance tolerance.</p>" +
+          "<p><strong>In SolidWorks:</strong> <strong>Clearance Verification</strong> confirms a minimum gap; <strong>Interference Detection</strong> confirms none — see <a href='#/interference'>&sect;7.1</a>.</p>" },
       ]},
       { n: 6, title: "Manufacturing & Fabrication", items: [
         { id: "capabilities", n: "6.1", title: "Assumed Capabilities", body:
           "<p>The standard assumes these processes are available: <strong>press brake, plasma, welding</strong>, and <strong>outsourced machining</strong>. Design to what the shop can actually make.</p>" },
         { id: "dfm", n: "6.2", title: "DFM Rules", body:
-          "<p>Design-for-manufacturing rules SHALL be respected, including:</p><ul><li>Minimum bend radius</li><li>Minimum wall thickness</li><li>Edge treatment</li></ul>" },
+          "<p>Design-for-manufacturing rules SHALL be respected, including:</p><ul><li>Minimum bend radius</li><li>Minimum wall thickness</li><li>Edge treatment</li></ul>" +
+          "<p><strong>In SolidWorks:</strong> <strong>DFMXpress</strong> validates rules like minimum radii and wall thickness; <strong>Sheet Metal</strong> features enforce bend radius / K-factor via bend tables and produce the flat pattern for the shop.</p>" },
         { id: "holdpoints", n: "6.3", title: "Hold-Point Sign-Off", body:
           "<p>A hold point is a signed checkpoint: fabrication pauses on <a href='#/hold-dims'>HOLD dimensions</a> until verified to tolerance. A phase <code>4.1</code> quick win — no software required, just discipline and a signature.</p>" },
       ]},
       { n: 7, title: "Assembly & Fit", items: [
         { id: "interference", n: "7.1", title: "Interference Checking", body:
           "<p>Native in SolidWorks: <code>Tools → Interference Detection</code>. Set a <strong>clearance tolerance</strong> (e.g. flag anything closer than <code>1.5\"</code>); it returns interfering pairs + gap and can exclude components you don't care about.</p>" +
+          "<p>Complement it with <code>Tools → Clearance Verification</code> for a minimum-gap requirement, and <strong>Measure</strong> / <strong>Mass Properties</strong> under Evaluate for spot checks. A <strong>Sensor</strong> can monitor interference and alert the moment it appears.</p>" +
           "<p>UI and API give the <strong>same answer</strong> on a complete model — geometry is geometry. The API's advantage is <strong>enforcement, not accuracy</strong>: run it automatically, gate publish, or batch nightly.</p>" +
           "<p>Decision: start with a <strong>mandatory UI check + engineer sign-off</strong> (phase <code>4.1</code>); add API gating later.</p>" +
           "<blockquote class='open'>On failure — block publish, or allow proceed + log? Leaning proceed-with-log, matching the <a href='#/validator'>compliance model</a>.</blockquote>" },
@@ -352,7 +322,8 @@
       ]},
       { n: 8, title: "Compliance & Sign-Off", items: [
         { id: "validator", n: "8.1", title: "The Automated Validator", body:
-          "<p>An automated validator checks machine-checkable rules and computes a result — <strong>Meets / Does Not Meet</strong>.</p><ul>" +
+          "<p>An automated validator checks machine-checkable rules and computes a result — <strong>Meets / Does Not Meet</strong>.</p>" +
+          "<p><strong>Native-first:</strong> build the machine-checkable layer on <strong>SOLIDWORKS Design Checker</strong> (drawing / document rules), run in batch via <strong>Task Scheduler</strong>, before writing any custom code.</p><ul>" +
           "<li><strong>Non-blocking:</strong> publishing a non-compliant part is allowed, but a <strong>permanent log</strong> is attached.</li>" +
           "<li>The record is authoritative and <strong>not engineer-editable</strong>.</li>" +
           "<li>On SolidWorks Standard, true immutability isn't guaranteed → approximate with a <strong>hash + append-only NetSuite record</strong> locked to a system role, re-stamped each run (<strong>tamper-evident, not tamper-proof</strong>).</li></ul>" +
@@ -369,7 +340,7 @@
           "<table><thead><tr><th>Date</th><th>Who</th><th>Entry</th></tr></thead><tbody>" +
           "<tr><td><code>2026-07-02</code></td><td>Naveen</td><td>Added the <strong>Log</strong> chapter.</td></tr>" +
           "<tr><td><code>2026-07-02</code></td><td>Claude (draft)</td><td>Drafted the full <a href='#/gdt-table'>GD&amp;T decision table</a> (&sect;3.2) and expanded <a href='#/gdt-datums'>datums &amp; stack-up</a> (&sect;3.3). Closes open action #4, pending Tony/Keegan review.</td></tr>" +
-          "<tr><td><code>2026-07-02</code></td><td>Naveen</td><td>Added a beginner-friendly <a href='#/github-basics'>Get Set Up</a> section — GitHub basics, SolidPilot install, and a first test — with a Success! checkpoint after each step. Everyday workflows to follow.</td></tr>" +
+          "<tr><td><code>2026-07-02</code></td><td>Naveen</td><td>Removed the SolidPilot / GitHub onboarding. Refocused on the standard itself — each rule now tied to its engineering principle and its native SolidWorks realization (Design Checker, DimXpert/MBD, TolAnalyst, DFMXpress, Clearance Verification, Task Scheduler).</td></tr>" +
           "</tbody></table>" },
       ]},
     ];
@@ -465,7 +436,7 @@
 
     /* ---------- auto-update on deploy ---------- */
     (function () {
-      var CURRENT = "20260702-223555";
+      var CURRENT = "20260702-224237";
       async function check() {
         try {
           var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
