@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="build" content="20260702-213921">
+  <meta name="build" content="20260702-214312">
   <title>Bailey — Engineering Design Standards</title>
   <style>
     :root {
@@ -264,6 +264,13 @@
           "<p>At release, a PDM-Pro gate stamps <strong>Meets / Does Not Meet</strong> with full revision control and audit trail. The <strong>Engineering Audit</strong> app (NetSuite-native) surfaces parent assembly, vendor, last-touched-by, and compliance to purchasing, production, and Naveen — no SolidWorks seat required.</p>" +
           "<blockquote>SolidWorks/PDM stays the system of record; NetSuite is store + display. SolidWorks pushes at publish; NetSuite reads.</blockquote>" },
       ]},
+      { n: 9, title: "Log", items: [
+        { id: "change-log", n: "9.1", title: "Change Log", body:
+          "<p class='lead'>Running log of changes and decisions on this standard.</p>" +
+          "<table><thead><tr><th>Date</th><th>Who</th><th>Entry</th></tr></thead><tbody>" +
+          "<tr><td><code>2026-07-02</code></td><td>Naveen</td><td>Added the <strong>Log</strong> chapter.</td></tr>" +
+          "</tbody></table>" },
+      ]},
     ];
 
     /* ---------- flatten + index ---------- */
@@ -357,7 +364,7 @@
 
     /* ---------- auto-update on deploy ---------- */
     (function () {
-      var CURRENT = "20260702-213921";
+      var CURRENT = "20260702-214312";
       async function check() {
         try {
           var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
