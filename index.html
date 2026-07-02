@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="build" content="20260702-214312">
+  <meta name="build" content="20260702-220500">
   <title>Bailey — Engineering Design Standards</title>
   <style>
     :root {
@@ -200,15 +200,71 @@
           "<p>In SolidWorks: <code>Insert → Geometric Tolerance</code> + datum references. SolidWorks <em>displays</em> it; it can't author it for you. The cost is <strong>time + discipline</strong>, not software.</p>" +
           "<p class='refs'><span>ASME Y14.5 (US)</span><span>ISO 1101</span></p>" },
         { id: "gdt-table", n: "3.2", title: "Decision Table by Feature", body:
-          "<p>Which control to reach for, by feature type:</p>" +
-          "<table><thead><tr><th>Feature type</th><th>Primary control</th></tr></thead><tbody>" +
-          "<tr><td>Holes</td><td>Position</td></tr>" +
-          "<tr><td>Shoulders</td><td>Perpendicularity</td></tr>" +
-          "<tr><td>Rotating parts</td><td>Runout</td></tr>" +
-          "<tr><td>Mating surfaces</td><td>Profile</td></tr>" +
-          "</tbody></table><blockquote class='open'>Build out the full Bailey GD&amp;T decision table (open action #4). Goal: GD&amp;T on all prints — write the standard, train, then enforce.</blockquote>" },
+          "<p class='lead'>Pick the control from the feature's <strong>function</strong>, not its shape. Symbols follow <code>ASME Y14.5</code>; establish datums per <a href='#/gdt-datums'>&sect;3.3</a>.</p>" +
+
+          "<h2>Location &mdash; features of size</h2>" +
+          "<table><thead><tr><th>Feature</th><th>Control</th><th>Datums</th><th>When / rule</th></tr></thead><tbody>" +
+          "<tr><td>Bolt / clearance-hole pattern</td><td>&#9014; Position <code>&#9410;</code></td><td>A｜B｜C</td><td>Locating &amp; clearance holes. MMC adds bonus tolerance as holes depart from max material &mdash; eases assembly; size it with the <a href='#/interference'>clearance budget</a>.</td></tr>" +
+          "<tr><td>Slot / elongated hole</td><td>&#9014; Position</td><td>A｜B｜C</td><td>Width is the feature of size; use to allow float on one axis.</td></tr>" +
+          "<tr><td>Locating pin / boss / shaft</td><td>&#9014; Position <code>&#9410;</code></td><td>A｜B｜C</td><td>Mating locators; MMC where it enters a clearance hole.</td></tr>" +
+          "<tr><td>Machined pocket / counterbore</td><td>&#9014; Position</td><td>A｜B｜C</td><td>Use Profile instead when the whole pocket form matters.</td></tr>" +
+          "</tbody></table>" +
+
+          "<h2>Orientation &mdash; relative to a datum</h2>" +
+          "<table><thead><tr><th>Feature</th><th>Control</th><th>Datums</th><th>When / rule</th></tr></thead><tbody>" +
+          "<tr><td>Seating shoulder / face &perp; to bore</td><td>&#8869; Perpendicularity</td><td>A</td><td>Bearing shoulders, seating faces.</td></tr>" +
+          "<tr><td>Bore / pin axis &perp; to mounting face</td><td>&#8869; Perpendicularity</td><td>A</td><td>Pin bores in plates &amp; weldments.</td></tr>" +
+          "<tr><td>Shim / stacked face parallel to base</td><td>&#8741; Parallelism</td><td>A</td><td>Plates, shims, mounting pads.</td></tr>" +
+          "<tr><td>Non-90&deg; face / gusset</td><td>&#8736; Angularity</td><td>A (｜B)</td><td>Angled brackets; dimension the basic angle.</td></tr>" +
+          "</tbody></table>" +
+
+          "<h2>Form &mdash; no datum</h2>" +
+          "<table><thead><tr><th>Feature</th><th>Control</th><th>Datums</th><th>When / rule</th></tr></thead><tbody>" +
+          "<tr><td>Bolted / gasket mating face</td><td>&#9189; Flatness</td><td>&mdash;</td><td>Sealing &amp; bolted joints; controls the seating plane.</td></tr>" +
+          "<tr><td>Long machined edge / rail</td><td>&#9188; Straightness</td><td>&mdash;</td><td>Straightedges, guide rails.</td></tr>" +
+          "<tr><td>Precision pin / bushing OD</td><td>&#9005; Cylindricity</td><td>&mdash;</td><td>Bushings, precision pins (add runout if rotating).</td></tr>" +
+          "<tr><td>Bearing bore roundness</td><td>&#9675; Circularity</td><td>&mdash;</td><td>Usually paired with runout on rotating bores.</td></tr>" +
+          "</tbody></table>" +
+
+          "<h2>Profile &mdash; size + form + orientation + location in one</h2>" +
+          "<table><thead><tr><th>Feature</th><th>Control</th><th>Datums</th><th>When / rule</th></tr></thead><tbody>" +
+          "<tr><td>Contoured / complex mating surface</td><td>&#9043; Profile of a surface</td><td>A｜B｜C</td><td>Weldment interfaces, contact faces. Datum-referenced = also locates it.</td></tr>" +
+          "<tr><td>Form-only surface</td><td>&#9043; Profile of a surface</td><td>&mdash;</td><td>Controls shape without locating.</td></tr>" +
+          "<tr><td>Edge / 2-D curve</td><td>&#9042; Profile of a line</td><td>A｜B</td><td>Sheet-metal edges, trimmed curves.</td></tr>" +
+          "<tr><td>Built-up weldment envelope</td><td>&#9043; Profile of a surface</td><td>A｜B｜C</td><td>Hold the finished weldment to a basic-dimension envelope.</td></tr>" +
+          "</tbody></table>" +
+
+          "<h2>Runout &mdash; rotating features, about a datum axis</h2>" +
+          "<table><thead><tr><th>Feature</th><th>Control</th><th>Datums</th><th>When / rule</th></tr></thead><tbody>" +
+          "<tr><td>Sheave / pulley OD &amp; face</td><td>&#8599; Circular runout</td><td>A-B (journal axis)</td><td>Controls wobble / eccentricity per revolution.</td></tr>" +
+          "<tr><td>Drum / long rotating shaft</td><td>&#9008; Total runout</td><td>A-B</td><td>Full-length control of the rotating surface.</td></tr>" +
+          "<tr><td>Bearing journal</td><td>&#8599; Circular runout</td><td>A-B</td><td>Reference the two supporting journals as a common datum axis.</td></tr>" +
+          "</tbody></table>" +
+
+          "<h2>Material-condition modifiers</h2><ul>" +
+          "<li>Default is <strong>RFS</strong> (regardless of feature size).</li>" +
+          "<li><code>&#9410;</code> <strong>MMC</strong> on clearance holes / pins &mdash; bonus tolerance as the feature departs from max material; the cheapest way to guarantee assembly. Ties to <a href='#/interference'>&sect;7.1</a>.</li>" +
+          "<li><code>&#9409;</code> <strong>LMC</strong> where minimum wall thickness or edge distance governs.</li></ul>" +
+
+          "<h2>Tolerance band &harr; service factor</h2>" +
+          "<p>Set the position / profile bands from the tolerance stack-up budget so the worst-case stack still holds the <a href='#/service-factor'>&ge; 2.75 service factor</a>. Tighter than functionally needed only adds cost &mdash; see <a href='#/gdt-datums'>&sect;3.3</a>.</p>" +
+
+          "<h2>Do not use (ASME Y14.5-2018)</h2>" +
+          "<p>Concentricity (&#9678;) and Symmetry (&#9007;) were removed in Y14.5-2018. Replace with <strong>Position</strong>, <strong>Runout</strong>, or <strong>Profile</strong>.</p>" +
+
+          "<blockquote>First full draft of the Bailey GD&amp;T decision table &mdash; closes open action #4. Review with Tony &amp; Keegan, then train and enforce.</blockquote>" },
         { id: "gdt-datums", n: "3.3", title: "Datums & Tolerance Stack-Up", body:
-          "<p>Select datums deliberately; a tolerance stack-up SHALL respect the governing <a href='#/service-factor'>service factor</a>. Hanomi can auto-generate GD&amp;T later from a clean 3D model — but only once the standard exists.</p>" },
+          "<h2>Establishing datums</h2>" +
+          "<p>Datums come from the part's <strong>functional and mating references</strong> &mdash; not convenience. Build a datum reference frame that constrains all six degrees of freedom:</p>" +
+          "<table><thead><tr><th>Datum</th><th>Typical feature</th><th>Constrains</th></tr></thead><tbody>" +
+          "<tr><td>Primary (A)</td><td>Largest mounting / seating face</td><td>3 DOF (1 translation, 2 rotations)</td></tr>" +
+          "<tr><td>Secondary (B)</td><td>A locating edge or bore</td><td>2 DOF</td></tr>" +
+          "<tr><td>Tertiary (C)</td><td>A stop edge or second hole</td><td>1 DOF</td></tr>" +
+          "</tbody></table>" +
+          "<p>Rotating parts: use the two support <strong>journals as a common datum axis (A-B)</strong> for <a href='#/gdt-table'>runout</a>.</p>" +
+          "<h2>Tolerance stack-up &harr; service factor</h2>" +
+          "<p>Budget the position / profile bands so the <strong>worst-case stack</strong> still preserves the governing <a href='#/service-factor'>service factor (&ge; 2.75)</a>. Convert design intent to <a href='#/std-tol'>standard tolerances</a>, and call out <a href='#/hold-dims'>HOLD</a> dimensions where the stack is critical.</p>" +
+          "<p>Hanomi can auto-generate GD&amp;T later from a clean 3D model &mdash; but only once this standard exists.</p>" },
       ]},
       { n: 4, title: "Materials & Fasteners", items: [
         { id: "materials", n: "4.1", title: "Approved Materials", body:
@@ -269,6 +325,7 @@
           "<p class='lead'>Running log of changes and decisions on this standard.</p>" +
           "<table><thead><tr><th>Date</th><th>Who</th><th>Entry</th></tr></thead><tbody>" +
           "<tr><td><code>2026-07-02</code></td><td>Naveen</td><td>Added the <strong>Log</strong> chapter.</td></tr>" +
+          "<tr><td><code>2026-07-02</code></td><td>Claude (draft)</td><td>Drafted the full <a href='#/gdt-table'>GD&amp;T decision table</a> (&sect;3.2) and expanded <a href='#/gdt-datums'>datums &amp; stack-up</a> (&sect;3.3). Closes open action #4, pending Tony/Keegan review.</td></tr>" +
           "</tbody></table>" },
       ]},
     ];
@@ -364,7 +421,7 @@
 
     /* ---------- auto-update on deploy ---------- */
     (function () {
-      var CURRENT = "20260702-214312";
+      var CURRENT = "20260702-220500";
       async function check() {
         try {
           var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
