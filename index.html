@@ -3,37 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="build" content="20260701-134900">
-  <title>Bailey — Engineering Standards</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <meta name="build" content="20260702-213921">
+  <title>Bailey — Engineering Design Standards</title>
   <style>
     :root {
       --red: #E30613;
-      --ink: #101010;
-      --paper: #F4F2EE;
+      --ink: #14171A;
+      --steel: #5B6670;
+      --hairline: #E3E6EA;
+      --panel: #F6F7F9;
       --white: #FFFFFF;
-      --n150: #E6E6E6;
-      --n200: #D9D9D9;
-      --n300: #B8B8B8;
-      --n400: #8C8C8C;
-      --n500: #757575;
-      --n600: #555555;
-      --n700: #3A3A3A;
-      --sans: 'Instrument Sans', 'Helvetica Neue', Arial, sans-serif;
-      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --sans: Arial, "Helvetica Neue", Helvetica, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       --bar-h: 60px;
-      --nav-w: 300px;
+      --nav-w: 320px;
     }
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
-    body {
-      font-family: var(--sans);
-      color: var(--ink);
-      background: var(--paper);
-      -webkit-font-smoothing: antialiased;
-    }
+    body { font-family: var(--sans); color: var(--ink); background: var(--panel); -webkit-font-smoothing: antialiased; }
     a { color: var(--red); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
@@ -41,109 +28,83 @@
     .bar {
       position: fixed; top: 0; left: 0; right: 0; height: var(--bar-h);
       background: var(--ink); color: var(--white);
-      display: flex; align-items: center; gap: 14px;
-      padding: 0 20px; z-index: 30;
+      display: flex; align-items: center; gap: 14px; padding: 0 20px; z-index: 30;
     }
     .bar::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--red); }
     .bar .mark { height: 30px; width: auto; color: var(--red); flex: none; }
-    .bar .brand { font-family: var(--sans); font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
-    .bar .brand .sub { color: var(--n400); font-weight: 500; }
+    .bar .brand { font-weight: 700; font-size: 17px; }
+    .bar .brand .sub { color: #9aa4ad; font-weight: 400; }
     .bar .spacer { flex: 1; }
-    .bar .tag {
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--n400); white-space: nowrap;
-    }
-    .menu-btn {
-      display: none; background: none; border: 1px solid var(--n700); color: var(--white);
-      width: 38px; height: 34px; border-radius: 4px; cursor: pointer; font-size: 16px; flex: none;
-    }
+    .menu-btn { display: none; background: none; border: 1px solid #3A3F44; color: var(--white); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; font-size: 16px; flex: none; }
 
-    /* ---------- layout ---------- */
+    /* ---------- nav ---------- */
     .nav {
       position: fixed; top: var(--bar-h); bottom: 0; left: 0; width: var(--nav-w);
-      background: var(--white); border-right: 1px solid var(--n200);
-      overflow-y: auto; padding: 18px 0 40px; z-index: 20;
+      background: var(--white); border-right: 1px solid var(--hairline); overflow-y: auto; padding: 14px 0 40px; z-index: 20;
     }
-    .filter-wrap { padding: 0 18px 12px; }
-    .filter {
-      width: 100%; font-family: var(--mono); font-size: 12px; padding: 9px 10px;
-      border: 1px solid var(--n200); border-radius: 4px; background: var(--paper); color: var(--ink);
-    }
+    .filter-wrap { padding: 4px 16px 10px; }
+    .filter { width: 100%; font-family: var(--mono); font-size: 12px; padding: 9px 10px; border: 1px solid var(--hairline); border-radius: 4px; background: var(--panel); color: var(--ink); }
     .filter:focus { outline: none; border-color: var(--red); }
-    .nav-group { margin-top: 2px; border-top: 1px solid var(--n150); }
-    .nav-group:first-child { border-top: none; }
+    .nav-group { border-top: 1px solid var(--hairline); }
+    .nav-group:first-of-type { border-top: none; }
     .grp-title {
       width: 100%; text-align: left; background: none; border: none; cursor: pointer;
-      display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--n500); padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 13px; color: var(--ink); padding: 13px 16px;
     }
-    .grp-title:hover { color: var(--ink); }
-    .grp-title .chev { transition: transform 0.18s ease; color: var(--n400); font-size: 11px; }
+    .grp-title:hover { color: var(--red); }
+    .grp-title .cnum { font-family: var(--mono); font-size: 12px; color: var(--red); font-weight: 700; flex: none; min-width: 14px; }
+    .grp-title .chev { margin-left: auto; transition: transform 0.18s ease; color: var(--steel); font-size: 11px; }
     .nav-group:not(.collapsed) .grp-title .chev { transform: rotate(90deg); }
-    .nav-group:not(.collapsed) .grp-title { color: var(--ink); }
     .nav-group.collapsed .grp-items { display: none; }
-    .nav a {
-      display: flex; align-items: baseline; gap: 8px;
-      padding: 7px 18px 7px 22px; color: var(--n700); font-size: 14px; line-height: 1.3;
-      border-left: 3px solid transparent;
+    .grp-items { padding-bottom: 6px; }
+    .nav a.item {
+      display: flex; gap: 9px; padding: 7px 16px 7px 20px; color: var(--steel); font-size: 13.5px; line-height: 1.35; border-left: 3px solid transparent;
     }
-    .nav a .num { font-family: var(--mono); font-size: 11px; color: var(--n400); flex: none; }
-    .nav a:hover { background: var(--paper); text-decoration: none; }
-    .nav a.active { color: var(--ink); font-weight: 600; border-left-color: var(--red); background: var(--paper); }
-    .nav a.active .num { color: var(--red); }
+    .nav a.item .num { font-family: var(--mono); font-size: 11px; color: #aeb6bd; flex: none; }
+    .nav a.item:hover { background: var(--panel); text-decoration: none; color: var(--ink); }
+    .nav a.item.active { color: var(--ink); font-weight: 700; border-left-color: var(--red); background: var(--panel); }
+    .nav a.item.active .num { color: var(--red); }
 
-    .content {
-      margin-left: var(--nav-w); padding: calc(var(--bar-h) + 40px) 7vw 96px;
-      max-width: 900px;
-    }
+    /* ---------- content ---------- */
+    .content { margin-left: var(--nav-w); padding: calc(var(--bar-h) + 40px) 7vw 96px; max-width: 940px; }
     .backdrop { display: none; }
 
-    /* ---------- article ---------- */
-    .kicker {
-      font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--red); margin: 0 0 10px;
-      display: inline-flex; align-items: center; gap: 10px;
-    }
-    .kicker::before { content: ""; width: 26px; height: 2px; background: var(--red); }
-    .badge {
-      font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--n600); background: var(--n150); border: 1px solid var(--n200); padding: 3px 8px; border-radius: 3px;
-      vertical-align: middle; margin-left: 10px;
-    }
-    article h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.02; margin: 4px 0 6px; }
-    article h2 { font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em; margin: 2.2rem 0 0.6rem; }
-    article p, article li { font-size: 1.02rem; line-height: 1.62; color: var(--n700); }
-    article ul { padding-left: 1.2rem; }
-    article li { margin: 0.3rem 0; }
-    article code {
-      font-family: var(--mono); font-size: 0.86em; background: var(--white);
-      border: 1px solid var(--n200); border-radius: 3px; padding: 1px 6px;
-    }
-    article blockquote {
-      margin: 1.2rem 0; padding: 12px 18px; background: var(--white);
-      border-left: 3px solid var(--red); color: var(--n600); font-size: 0.98rem;
-    }
-    .lead { font-size: 1.15rem; color: var(--n600); line-height: 1.55; }
-    .refs { font-family: var(--mono); font-size: 12px; color: var(--n500); }
-    .refs span { display: inline-block; border: 1px solid var(--n200); background: var(--white); padding: 3px 8px; margin: 3px 4px 0 0; }
+    .crumb { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); margin: 0 0 10px; }
+    .crumb .tick { color: var(--red); }
+    article h1 { font-size: clamp(1.9rem, 4.5vw, 2.7rem); font-weight: 700; letter-spacing: -0.01em; line-height: 1.05; margin: 2px 0 8px; }
+    article h1 .cnum { color: var(--red); font-family: var(--mono); font-size: 0.7em; margin-right: 10px; }
+    article h2 { font-size: 1.3rem; font-weight: 700; margin: 2.2rem 0 0.5rem; }
+    article p, article li { font-size: 1.02rem; line-height: 1.62; color: #2b3138; }
+    article ul { padding-left: 1.15rem; }
+    article li { margin: 0.28rem 0; }
+    .lead { font-size: 1.14rem; color: var(--steel); line-height: 1.55; }
+    article code { font-family: var(--mono); font-size: 0.85em; background: var(--white); border: 1px solid var(--hairline); border-radius: 3px; padding: 1px 6px; }
+    blockquote { margin: 1.2rem 0; padding: 12px 16px; background: var(--white); border-left: 3px solid var(--red); color: var(--steel); font-size: 0.98rem; }
+    blockquote.open::before { content: "OPEN "; font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; color: var(--red); font-weight: 700; }
 
-    /* prev / next */
-    .pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 56px; border-top: 1px solid var(--n200); padding-top: 22px; }
-    .pager a { flex: 1; padding: 14px 16px; border: 1px solid var(--n200); background: var(--white); border-radius: 5px; color: var(--ink); }
+    table { border-collapse: collapse; width: 100%; margin: 1.1rem 0; font-size: 0.95rem; }
+    thead th { background: var(--red); color: #fff; text-align: left; padding: 9px 12px; font-weight: 700; }
+    td { border: 1px solid var(--hairline); padding: 9px 12px; vertical-align: top; }
+    tbody tr:nth-child(even) td { background: var(--white); }
+    td code { background: var(--panel); }
+
+    .refs { font-family: var(--mono); font-size: 12px; color: var(--steel); margin-top: 1rem; }
+    .refs span { display: inline-block; border: 1px solid var(--hairline); background: var(--white); padding: 3px 8px; margin: 3px 4px 0 0; }
+
+    .pager { display: flex; justify-content: space-between; gap: 16px; margin-top: 54px; border-top: 1px solid var(--hairline); padding-top: 20px; }
+    .pager a { flex: 1; padding: 13px 16px; border: 1px solid var(--hairline); background: var(--white); border-radius: 5px; color: var(--ink); }
     .pager a:hover { border-color: var(--red); text-decoration: none; }
-    .pager .dir { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--n400); display: block; margin-bottom: 4px; }
+    .pager .dir { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); display: block; margin-bottom: 4px; }
     .pager a.next { text-align: right; }
     .pager a.disabled { visibility: hidden; }
 
-    /* ---------- responsive ---------- */
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .menu-btn { display: block; }
-      .bar .tag { display: none; }
-      .nav { transform: translateX(-100%); transition: transform 0.22s ease; box-shadow: 0 0 40px rgba(0,0,0,0.2); }
+      .nav { transform: translateX(-100%); transition: transform 0.22s ease; box-shadow: 0 0 40px rgba(0,0,0,0.18); }
       body.nav-open .nav { transform: translateX(0); }
-      body.nav-open .backdrop { display: block; position: fixed; inset: var(--bar-h) 0 0 0; background: rgba(16,16,16,0.4); z-index: 15; }
-      .content { margin-left: 0; padding: calc(var(--bar-h) + 28px) 24px 80px; }
+      body.nav-open .backdrop { display: block; position: fixed; inset: var(--bar-h) 0 0 0; background: rgba(20,23,26,0.4); z-index: 15; }
+      .content { margin-left: 0; padding: calc(var(--bar-h) + 26px) 22px 80px; }
     }
     @media (prefers-reduced-motion: reduce) { .nav { transition: none; } }
   </style>
@@ -155,7 +116,7 @@
       <path d="M 445.789 257.419 L 0 0 L 0 141.546 L 75.412 185.089 L 75.412 130.635 L 296.858 258.508 L 223.394 302.374 L 222.858 302.076 L 147.96 346.748 L 148.539 347.07 L 75.412 390.734 L 75.412 306.461 L 117.408 329.782 L 192.306 285.109 L 109.309 239.018 L 109.075 239.424 L 84.808 225.412 L 75.412 220.194 L 75.412 219.987 L 0 176.444 L 0 521.484 L 107.504 459.411 L 215.019 395.213 L 214.816 394.872 L 350.626 313.869 L 350.79 314.144 L 445.789 257.419 Z"></path>
       <path d="M 329.814 361.471 L 254.915 406.144 L 296.024 428.973 L 75.412 561.786 L 75.412 512.839 L 0 556.382 L 0 695.215 L 446.623 426.339 L 329.814 361.471 Z"></path>
     </svg>
-    <div class="brand">Bailey <span class="sub">/ Engineering Standards</span></div>
+    <div class="brand">Bailey <span class="sub">/ Engineering Design Standards</span></div>
     <div class="spacer"></div>
   </header>
 
@@ -169,88 +130,143 @@
 
   <script>
     /* ============================================================
-       Engineering Standards — content model.
-       FIRST CUT / DRAFT skeleton. Each section is a stub to be
-       replaced with the finalized standards. Cross-links use
-       href="#/<id>" so the whole handbook is interlinked.
+       Bailey Engineering Design Standards — content model.
+       Built from CLAUDE.md (Naveen + Eric working sessions).
+       Working draft, co-authored one chapter at a time; cross-links
+       use href="#/<id>" so the whole handbook stays interlinked.
        ============================================================ */
     var GROUPS = [
-      { title: "Overview", items: [
-        { id: "purpose", title: "Purpose & Scope", body:
-          "<p class='lead'>The Bailey Engineering Standards define how we design, analyze, build, and verify precision lifting and crane systems for mission-critical environments.</p>" +
-          "<h2>Why this exists</h2><p>A single source of truth so every engineer, drawing, and part meets the same bar — <em>Safety Engineered. Performance Delivered.</em></p>" +
-          "<h2>Scope</h2><ul>" +
-          "<li>All product engineering: <a href='#/structural'>structural design</a>, <a href='#/loads'>load ratings</a>, <a href='#/materials'>materials</a>, and <a href='#/welding'>fabrication</a>.</li>" +
-          "<li>The full lifecycle — from <a href='#/requirements'>requirements</a> through <a href='#/testing'>proof-load testing</a> and <a href='#/traceability'>records</a>.</li>" +
-          "</ul><blockquote>Draft skeleton — pending the finalized standards from our working discussion.</blockquote>" },
-        { id: "how-to-use", title: "How to Use This Handbook", body:
-          "<p>Navigate with the table of contents on the left. Every standard is interlinked — click any cross-reference to jump, like a wiki.</p>" +
-          "<h2>Conventions</h2><ul><li><strong>MUST / SHALL</strong> — mandatory.</li><li><strong>SHOULD</strong> — strongly recommended; deviations require sign-off per <a href='#/governance'>Governance</a>.</li><li><strong>MAY</strong> — optional.</li></ul>" },
-        { id: "governance", title: "Governance & Revision Control", body:
-          "<h2>Ownership</h2><p>Standards are owned by Engineering leadership. Changes flow through <a href='#/change-mgmt'>Change Management</a> and are logged in the <a href='#/revision-history'>Revision History</a>.</p>" +
-          "<h2>Deviations</h2><p>Any deviation from a <code>SHALL</code> requires a documented waiver and design-review approval (<a href='#/design-reviews'>Design Reviews</a>).</p>" },
+      { title: "Start Here", items: [
+        { id: "about", n: "", title: "About This Standard", body:
+          "<p class='lead'>The Bailey Engineering Design Standards replace tribal knowledge with one enforced standard for mechanical parts, assemblies, and drawings — so rework isn't caught late at assembly.</p>" +
+          "<h2>The problem we're solving</h2><p>Too much rework, caught too late. The fix: map <strong>As-Is → To-Be</strong>, bridge in phases, and run the process on a standard rather than any one engineer's memory.</p>" +
+          "<h2>How this document works</h2><ul>" +
+          "<li>One <strong>living document</strong>, co-authored a chapter at a time by engineering (Tony &amp; Keegan) — not handed down.</li>" +
+          "<li>When a chapter changes, cross-references propagate so there are <strong>no conflicts or ambiguities</strong>.</li>" +
+          "<li>Guiding sequence: <strong>Standard → train → enforce</strong>. See <a href='#/enforcement'>Principles &amp; Enforcement</a>.</li>" +
+          "</ul><blockquote>Working draft. Chapter numbering follows the agreed 8-chapter outline; confirm/renumber before deep drafting.</blockquote>" },
+        { id: "how-to-use", n: "", title: "How to Use", body:
+          "<h2>Navigation</h2><p>Chapters are on the left. Open a chapter with its arrow (they toggle independently). Every cross-reference is clickable, like a wiki, and Prev/Next walks the whole standard in order.</p>" +
+          "<h2>Requirement language</h2><ul><li><strong>SHALL / MUST</strong> — mandatory; a deviation needs a logged waiver.</li><li><strong>SHOULD</strong> — strongly recommended.</li><li><strong>MAY</strong> — optional.</li></ul>" +
+          "<p>Machine-checkable rules are validated automatically at release; judgment rules require <a href='#/attestation'>engineer attestation</a>.</p>" },
+        { id: "roadmap", n: "", title: "Rollout Roadmap", body:
+          "<p class='lead'>As-Is → To-Be, bridged in phases. The #1 risk is scope creep, so cheap wins are decoupled from the app work.</p>" +
+          "<table><thead><tr><th>Phase</th><th>What</th></tr></thead><tbody>" +
+          "<tr><td><code>4.1</code></td><td><strong>Quick-win SOPs now (no software):</strong> mandatory <a href='#/interference'>interference check</a> before release · FEA report before Stage 1→2 · <a href='#/holdpoints'>hold-point sign-off</a> · <a href='#/whole-print'>whole-print review</a>. Run hard 3–4 months.</td></tr>" +
+          "<tr><td><code>4.2</code></td><td><strong>Bailey Standard + native audit:</strong> write this document; audit native SolidWorks/PDM capability before custom code. <a href='#/gdt-table'>GD&amp;T</a> lives here.</td></tr>" +
+          "<tr><td><code>4.3</code></td><td><strong>One-file proof of concept:</strong> SolidWorks API — read metadata → browser → edit → write back → pass/fail. Cap: one file, one write-back.</td></tr>" +
+          "<tr><td><code>4.4</code></td><td><strong>Engineering Audit app</strong> (NetSuite-native). See <a href='#/audit-trail'>Release gate &amp; audit</a>.</td></tr>" +
+          "<tr><td><code>4.5</code></td><td><strong>Hanomi / successor</strong> — drawing generation, last, on a clean base.</td></tr>" +
+          "</tbody></table><p>Parallel track: parametric <strong>Stage-1 load-cascade</strong> automation — separate, must not block Stages 2–3.</p>" },
       ]},
-      { title: "Design", items: [
-        { id: "design-principles", title: "Design Principles & Safety Factors", body:
-          "<h2>Principles</h2><ul><li>Design for the worst-case duty cycle and environment.</li><li>Fail-safe over fail-operational where life safety is involved.</li><li>Traceable analysis behind every rated number (<a href='#/analysis'>Analysis</a>).</li></ul>" +
-          "<h2>Safety factors</h2><p>Minimum design factors align with <code>ASME B30</code> and applicable duty classifications. See <a href='#/loads'>Load Ratings</a>.</p>" +
-          "<p class='refs'><span>ASME B30</span><span>AISC 360</span><span>ANSI MH27</span></p>" },
-        { id: "structural", title: "Structural Design", body:
-          "<h2>Basis</h2><p>Structural members are sized to <code>AISC 360</code> with fatigue considered per duty class. Welds per <a href='#/welding'>Welding Standards</a>; materials per <a href='#/materials'>Materials Selection</a>.</p>" +
-          "<h2>Requirements</h2><ul><li>Deflection limits SHALL be defined per application.</li><li>Fatigue-critical joints SHALL be identified on drawings.</li></ul>" },
-        { id: "loads", title: "Load Ratings & Capacity", body:
-          "<h2>Rated capacity</h2><p>Every product carries a documented rated capacity derived from <a href='#/analysis'>analysis</a> and confirmed by <a href='#/testing'>proof-load test</a>.</p>" +
-          "<ul><li>Dynamic and impact factors SHALL be applied per duty class.</li><li>Load charts MUST be traceable to the governing calculation.</li></ul>" },
-        { id: "materials", title: "Materials Selection", body:
-          "<h2>Approved materials</h2><p>Structural steels, alloys, and coatings from the approved materials list. Substitutions require review per <a href='#/governance'>Governance</a>.</p>" +
-          "<ul><li>Mill certs required for load-bearing members (<a href='#/traceability'>Traceability</a>).</li><li>Corrosion protection per <a href='#/coatings'>Coatings</a>.</li></ul>" },
-        { id: "fasteners", title: "Fasteners & Hardware", body:
-          "<h2>Standards</h2><p>Grades, torque, and preload per application. Critical fasteners SHALL be specified with torque and locking method on the drawing.</p><p class='refs'><span>ASTM A325 / F3125</span><span>ISO 898</span></p>" },
-        { id: "tolerances", title: "Tolerances & Fits (GD&T)", body:
-          "<h2>GD&T</h2><p>Geometric dimensioning &amp; tolerancing per <code>ASME Y14.5</code>. Default tolerances defined in the title block; see <a href='#/drawings'>Drawing Standards</a>.</p>" },
+      { n: 1, title: "Scope & Fundamentals", items: [
+        { id: "scope-covers", n: "1.1", title: "What This Covers", body:
+          "<h2>In scope</h2><p>Mechanical <strong>parts, assemblies, and drawings</strong>.</p><h2>Out of scope</h2><p>Electrical and software — covered elsewhere.</p>" +
+          "<h2>Who enforces</h2><p>Engineering owns the standard. Compliance is confirmed at the <a href='#/release-gate'>release gate</a> and recorded in the audit trail. Everyone co-authors; nobody hands it down.</p>" },
+        { id: "design-stages", n: "1.2", title: "Where It Applies — Design Stages", body:
+          "<table><thead><tr><th>Stage</th><th>What happens</th><th>Part #s</th></tr></thead><tbody>" +
+          "<tr><td><strong>0 — Concept</strong></td><td>Fit-form-function; rough \"Lego-block\" massing — how big does it need to be.</td><td>None (a few legacy)</td></tr>" +
+          "<tr><td><strong>1 — Calculations</strong></td><td>Stress, strain, loads vs <a href='#/service-factor'>service factor</a>. Load cascade platform → base. FEA to fine-tune.</td><td>None</td></tr>" +
+          "<tr><td><strong>Gate 1→2</strong></td><td>Assigning the part number <em>is</em> the gate.</td><td>Assigned</td></tr>" +
+          "<tr><td><strong>2 — Drawings</strong></td><td>Detailed <a href='#/drawing-carry'>drawings</a> with every mfg dimension; vendors in metadata → NetSuite via CAD link; design review; release.</td><td>Yes</td></tr>" +
+          "</tbody></table><p>Beyond Stage 2: manuals, schematics, electrical.</p>" },
+        { id: "enforcement", n: "1.3", title: "Principles & Enforcement", body:
+          "<h2>Recurring principles</h2><ul>" +
+          "<li><strong>Native-first</strong> — map what SolidWorks/PDM already do before building anything custom.</li>" +
+          "<li><strong>Standard → train → enforce</strong>, in that order.</li>" +
+          "<li><strong>Scope discipline</strong> — decouple cheap wins from the app.</li>" +
+          "<li><strong>Compliance is non-blocking but permanently logged</strong> — see <a href='#/validator'>the validator</a>.</li>" +
+          "<li><strong>HARDEN</strong> — make each function survive without one person.</li></ul>" },
       ]},
-      { title: "Engineering Process", items: [
-        { id: "requirements", title: "Requirements & Specification", body:
-          "<h2>Capture</h2><p>Each project begins with a written requirements spec — duty, environment, capacity, interfaces, compliance. Feeds <a href='#/design-reviews'>Design Reviews</a>.</p>" },
-        { id: "design-reviews", title: "Design Reviews & Stage Gates", body:
-          "<h2>Gates</h2><ul><li>Concept → Preliminary → Critical Design Review → Release.</li><li>Each gate has entry/exit criteria and a sign-off.</li></ul><p>Findings tracked to closure before <a href='#/change-mgmt'>release</a>.</p>" },
-        { id: "analysis", title: "Calculations & Analysis (FEA)", body:
-          "<h2>Analysis</h2><p>Hand calcs and FEA SHALL be documented, reviewed, and archived (<a href='#/traceability'>Traceability</a>). Assumptions and boundary conditions recorded.</p>" },
-        { id: "change-mgmt", title: "Change Management (ECO)", body:
-          "<h2>Engineering Change Order</h2><p>Released designs change only via ECO: impact assessment, approval, revised <a href='#/drawings'>drawings</a>, and <a href='#/revision-history'>revision log</a> entry.</p>" },
+      { n: 2, title: "Drawings & Documentation", items: [
+        { id: "drawing-carry", n: "2.1", title: "What Every Drawing Must Carry", body:
+          "<p>Every released drawing SHALL carry:</p><ul>" +
+          "<li>Title block + revision</li><li>Material (from the <a href='#/materials'>approved list</a>) and surface finish</li>" +
+          "<li><strong>All</strong> manufacturing dimensions</li><li><a href='#/gdt-table'>GD&amp;T</a> per feature type</li>" +
+          "<li>Critical-dimension (<a href='#/hold-dims'>HOLD</a>) call-outs</li><li>Vendor / part number</li></ul>" },
+        { id: "drawing-format", n: "2.2", title: "Format & Layout", body:
+          "<p>Consistent title block, revision block, and standard notes across all prints. Vendors set on the drawing and in SolidWorks metadata flow to NetSuite via the CAD link.</p>" },
+        { id: "whole-print", n: "2.3", title: "The Missing-Dimension Checklist", body:
+          "<h2>Whole-print review</h2><p>Manual dimensioning makes it easy to miss a hole on a complex part. A <strong>whole-print review SHALL</strong> be completed before release — a systematic pass, not an ad-hoc glance. One of the phase <code>4.1</code> quick wins.</p>" },
+        { id: "dim-conflict", n: "2.4", title: "Design vs Manufacturing Dimensioning", body:
+          "<p>Design and manufacturing dimension differently and it causes conflict:</p><ul>" +
+          "<li><strong>Center-relative</strong> (design) vs <strong>ordinate-from-corner</strong> (manufacturing).</li>" +
+          "<li><strong>Round</strong> vs <strong>rectangular</strong> zero-position.</li></ul>" +
+          "<p>Target state: design → mfg dimensioning <strong>converts automatically</strong>, from one standardized basis.</p>" },
       ]},
-      { title: "Drawings & Data", items: [
-        { id: "cad", title: "CAD & Modeling Standards", body: "<h2>Modeling</h2><p>Consistent model tree, units, datums, and origin. Master models drive <a href='#/drawings'>drawings</a> and <a href='#/part-numbering'>BOMs</a>.</p>" },
-        { id: "drawings", title: "Drawing Standards", body: "<h2>Sheets</h2><p>Standard title block, revision block, and notes. Dimensioning per <a href='#/tolerances'>GD&T</a>. Welds called out per <a href='#/welding'>Welding</a>.</p>" },
-        { id: "part-numbering", title: "Part Numbering & BOM", body: "<h2>Numbering</h2><p>Structured, non-significant part numbers with a controlled BOM. See <a href='#/naming'>Naming Conventions</a>.</p>" },
-        { id: "naming", title: "File & Naming Conventions", body: "<h2>Files</h2><p>Consistent file and revision naming so any artifact is findable and traceable.</p>" },
+      { n: 3, title: "GD&T", items: [
+        { id: "gdt-why", n: "3.1", title: "Why GD&T", body:
+          "<p>Geometric Dimensioning &amp; Tolerancing locks a part's <strong>size and its position/shape</strong> together — referenced to <strong>datums</strong> — instead of size alone.</p>" +
+          "<p>In SolidWorks: <code>Insert → Geometric Tolerance</code> + datum references. SolidWorks <em>displays</em> it; it can't author it for you. The cost is <strong>time + discipline</strong>, not software.</p>" +
+          "<p class='refs'><span>ASME Y14.5 (US)</span><span>ISO 1101</span></p>" },
+        { id: "gdt-table", n: "3.2", title: "Decision Table by Feature", body:
+          "<p>Which control to reach for, by feature type:</p>" +
+          "<table><thead><tr><th>Feature type</th><th>Primary control</th></tr></thead><tbody>" +
+          "<tr><td>Holes</td><td>Position</td></tr>" +
+          "<tr><td>Shoulders</td><td>Perpendicularity</td></tr>" +
+          "<tr><td>Rotating parts</td><td>Runout</td></tr>" +
+          "<tr><td>Mating surfaces</td><td>Profile</td></tr>" +
+          "</tbody></table><blockquote class='open'>Build out the full Bailey GD&amp;T decision table (open action #4). Goal: GD&amp;T on all prints — write the standard, train, then enforce.</blockquote>" },
+        { id: "gdt-datums", n: "3.3", title: "Datums & Tolerance Stack-Up", body:
+          "<p>Select datums deliberately; a tolerance stack-up SHALL respect the governing <a href='#/service-factor'>service factor</a>. Hanomi can auto-generate GD&amp;T later from a clean 3D model — but only once the standard exists.</p>" },
       ]},
-      { title: "Manufacturing", items: [
-        { id: "welding", title: "Welding Standards", body:
-          "<h2>Basis</h2><p>Structural welding per <code>AWS D1.1</code>. Qualified procedures (WPS) and welders. Weld symbols on <a href='#/drawings'>drawings</a>; inspection per <a href='#/ndt'>NDT</a>.</p><p class='refs'><span>AWS D1.1</span></p>" },
-        { id: "machining", title: "Machining & Fabrication", body: "<h2>Fabrication</h2><p>Process controls, surface finish, and edge prep to drawing. Fits per <a href='#/tolerances'>Tolerances</a>.</p>" },
-        { id: "assembly", title: "Assembly", body: "<h2>Assembly</h2><p>Work instructions, torque specs (<a href='#/fasteners'>Fasteners</a>), and in-process <a href='#/inspection'>inspection</a> checkpoints.</p>" },
-        { id: "coatings", title: "Surface Treatment & Coatings", body: "<h2>Protection</h2><p>Surface prep and coating systems matched to the service environment (<a href='#/materials'>Materials</a>).</p>" },
+      { n: 4, title: "Materials & Fasteners", items: [
+        { id: "materials", n: "4.1", title: "Approved Materials", body:
+          "<p>All designs draw from <strong>one standardized material list</strong>. Substitutions require review.</p>" +
+          "<table><thead><tr><th>Family</th><th>Grades</th></tr></thead><tbody>" +
+          "<tr><td>Structural steel</td><td><code>Gr.50</code> · <code>Gr.80</code> · <code>Gr.100</code></td></tr>" +
+          "<tr><td>Aluminum</td><td>Approved grades (to be listed)</td></tr>" +
+          "</tbody></table>" },
+        { id: "service-factor", n: "4.2", title: "Service Factor → Material", body:
+          "<p>Design factor <strong>≥ 2.75</strong> for a given grade. When capacity is short, climb the <strong>material ladder</strong> before adding thickness:</p>" +
+          "<p><code>Gr.50 → Gr.80 → Gr.100 → thicken</code></p>" +
+          "<p>Loads cascade <strong>platform → base</strong> and are recomputed at each level (today by hand; the parallel track automates this as a linked load cascade).</p>" },
+        { id: "fasteners", n: "4.3", title: "Fasteners", body:
+          "<p>Critical fasteners SHALL be specified on the drawing with <strong>grade, locking method, and torque</strong>.</p>" },
       ]},
-      { title: "Quality & Safety", items: [
-        { id: "inspection", title: "Inspection & Acceptance", body: "<h2>Acceptance</h2><p>Dimensional and visual inspection against drawings; nonconformances dispositioned and recorded (<a href='#/traceability'>Traceability</a>).</p>" },
-        { id: "testing", title: "Testing & Proof Load", body: "<h2>Proof load</h2><p>Rated products SHALL pass a documented proof-load test before shipment, tied to the governing <a href='#/loads'>load rating</a>.</p>" },
-        { id: "ndt", title: "Non-Destructive Testing", body: "<h2>NDT</h2><p>Method (VT/MT/PT/UT) and acceptance per weld criticality (<a href='#/welding'>Welding</a>). Performed by qualified personnel.</p>" },
-        { id: "safety", title: "Safety Engineering", body:
-          "<h2>Safety first</h2><p>Our defining principle: <em>failure is not an option</em>. Hazard analysis and risk assessment are built into <a href='#/design-reviews'>design reviews</a>.</p>" },
-        { id: "compliance", title: "Compliance & Certifications", body:
-          "<h2>Compliance</h2><p>Products meet applicable OSHA/ANSI/ASME requirements. Bailey is a Service-Disabled Veteran-Owned manufacturer; QMS aligned to <code>ISO 9001</code>.</p><p class='refs'><span>OSHA 1910</span><span>ANSI</span><span>ASME B30</span><span>ISO 9001</span></p>" },
-        { id: "traceability", title: "Traceability & Records", body: "<h2>Records</h2><p>Material certs, calcs, inspection, and test records retained per policy so any rated product is fully traceable.</p>" },
+      { n: 5, title: "Tolerances & Fits", items: [
+        { id: "std-tol", n: "5.1", title: "Standard Tolerances", body:
+          "<p>Default hole/shaft tolerance bands live in the title block; only deviations are called out on the feature. Keeps prints clean and consistent.</p>" },
+        { id: "hold-dims", n: "5.2", title: "Critical \"HOLD\" Dimensions", body:
+          "<p>The engineer marks critical dimensions <strong>HOLD</strong> and signs off. Fabrication <strong>cannot proceed</strong> on a HOLD dimension until it is checked to tolerance — replacing \"it's the print, I'm good\" with a signature. See <a href='#/holdpoints'>Hold-Point Sign-Off</a>.</p>" },
+        { id: "fits", n: "5.3", title: "Interference vs Clearance", body:
+          "<p>Define interference vs clearance intent per fit; it feeds the assembly-level <a href='#/interference'>interference check</a> and its clearance tolerance.</p>" },
       ]},
-      { title: "Reference", items: [
-        { id: "standards-index", title: "Referenced Standards Index", body:
-          "<h2>External standards referenced</h2><p class='refs'><span>ASME B30</span><span>ASME Y14.5</span><span>AISC 360</span><span>AWS D1.1</span><span>ASTM F3125</span><span>ISO 898</span><span>ISO 9001</span><span>OSHA 1910</span><span>ANSI MH27</span></p><blockquote>Confirm exact editions/years during finalization.</blockquote>" },
-        { id: "glossary", title: "Glossary", body: "<h2>Terms</h2><ul><li><strong>Duty class</strong> — expected load/usage severity.</li><li><strong>Rated capacity</strong> — maximum load a product is certified to handle.</li><li><strong>WPS</strong> — Welding Procedure Specification.</li></ul>" },
-        { id: "revision-history", title: "Revision History", body: "<h2>Revisions</h2><ul><li><strong>Rev —</strong> First-cut skeleton table of contents. Content pending finalized standards.</li></ul>" },
+      { n: 6, title: "Manufacturing & Fabrication", items: [
+        { id: "capabilities", n: "6.1", title: "Assumed Capabilities", body:
+          "<p>The standard assumes these processes are available: <strong>press brake, plasma, welding</strong>, and <strong>outsourced machining</strong>. Design to what the shop can actually make.</p>" },
+        { id: "dfm", n: "6.2", title: "DFM Rules", body:
+          "<p>Design-for-manufacturing rules SHALL be respected, including:</p><ul><li>Minimum bend radius</li><li>Minimum wall thickness</li><li>Edge treatment</li></ul>" },
+        { id: "holdpoints", n: "6.3", title: "Hold-Point Sign-Off", body:
+          "<p>A hold point is a signed checkpoint: fabrication pauses on <a href='#/hold-dims'>HOLD dimensions</a> until verified to tolerance. A phase <code>4.1</code> quick win — no software required, just discipline and a signature.</p>" },
+      ]},
+      { n: 7, title: "Assembly & Fit", items: [
+        { id: "interference", n: "7.1", title: "Interference Checking", body:
+          "<p>Native in SolidWorks: <code>Tools → Interference Detection</code>. Set a <strong>clearance tolerance</strong> (e.g. flag anything closer than <code>1.5\"</code>); it returns interfering pairs + gap and can exclude components you don't care about.</p>" +
+          "<p>UI and API give the <strong>same answer</strong> on a complete model — geometry is geometry. The API's advantage is <strong>enforcement, not accuracy</strong>: run it automatically, gate publish, or batch nightly.</p>" +
+          "<p>Decision: start with a <strong>mandatory UI check + engineer sign-off</strong> (phase <code>4.1</code>); add API gating later.</p>" +
+          "<blockquote class='open'>On failure — block publish, or allow proceed + log? Leaning proceed-with-log, matching the <a href='#/validator'>compliance model</a>.</blockquote>" },
+        { id: "hierarchy", n: "7.2", title: "Sub-Assembly Hierarchy & Part Numbering", body:
+          "<p>Sub-assembly hierarchy maps to part numbering. Assigning the part number is the <a href='#/design-stages'>Stage 1→2 gate</a>.</p>" },
+        { id: "bom", n: "7.3", title: "Where-Used / BOM", body:
+          "<p>Parent assembly = BOM / where-used, already in NetSuite (with vendor/MPN synced). This is the \"easy half\" the <a href='#/audit-trail'>Engineering Audit</a> reads without a SolidWorks seat.</p>" },
+      ]},
+      { n: 8, title: "Compliance & Sign-Off", items: [
+        { id: "validator", n: "8.1", title: "The Automated Validator", body:
+          "<p>An automated validator checks machine-checkable rules and computes a result — <strong>Meets / Does Not Meet</strong>.</p><ul>" +
+          "<li><strong>Non-blocking:</strong> publishing a non-compliant part is allowed, but a <strong>permanent log</strong> is attached.</li>" +
+          "<li>The record is authoritative and <strong>not engineer-editable</strong>.</li>" +
+          "<li>On SolidWorks Standard, true immutability isn't guaranteed → approximate with a <strong>hash + append-only NetSuite record</strong> locked to a system role, re-stamped each run (<strong>tamper-evident, not tamper-proof</strong>).</li></ul>" +
+          "<blockquote class='open'>Accept tamper-evident on Standard, or buy PDM Pro for true immutability + auto-trigger + a hard release gate.</blockquote>" },
+        { id: "attestation", n: "8.2", title: "Engineer Attestation", body:
+          "<p>Rules that need judgment (not machine-checkable) are covered by <strong>engineer attestation</strong> — a recorded sign-off that the non-automatable requirements are met.</p>" },
+        { id: "audit-trail", n: "8.3", title: "Release Gate & Audit Trail", body:
+          "<p>At release, a PDM-Pro gate stamps <strong>Meets / Does Not Meet</strong> with full revision control and audit trail. The <strong>Engineering Audit</strong> app (NetSuite-native) surfaces parent assembly, vendor, last-touched-by, and compliance to purchasing, production, and Naveen — no SolidWorks seat required.</p>" +
+          "<blockquote>SolidWorks/PDM stays the system of record; NetSuite is store + display. SolidWorks pushes at publish; NetSuite reads.</blockquote>" },
       ]},
     ];
 
-    /* ---------- render ---------- */
+    /* ---------- flatten + index ---------- */
     var FLAT = [], GROUP_OF = {};
     GROUPS.forEach(function (g, gi) { g.items.forEach(function (it) { GROUP_OF[it.id] = gi; FLAT.push(it); }); });
     var INDEX = {}; FLAT.forEach(function (it, i) { INDEX[it.id] = i; });
@@ -258,16 +274,15 @@
 
     var navList = document.getElementById('navList');
     (function buildNav() {
-      var n = 0, html = "";
+      var html = "";
       GROUPS.forEach(function (g, gi) {
+        var cnum = (g.n === undefined || g.n === "") ? "" : "<span class='cnum'>" + g.n + "</span>";
         html += "<div class='nav-group collapsed' data-g='" + gi + "'>" +
-                "<button class='grp-title' data-g='" + gi + "'>" + g.title + "<span class='chev'>&#9656;</span></button>" +
+                "<button class='grp-title' data-g='" + gi + "'>" + cnum + "<span>" + g.title + "</span><span class='chev'>&#9656;</span></button>" +
                 "<div class='grp-items'>";
         g.items.forEach(function (it) {
-          n++;
-          var num = (n < 10 ? "0" : "") + n;
-          html += "<a href='#/" + it.id + "' data-id='" + it.id + "' data-title='" + it.title.toLowerCase() + "'>" +
-                  "<span class='num'>" + num + "</span><span class='lbl'>" + it.title + "</span></a>";
+          html += "<a class='item' href='#/" + it.id + "' data-id='" + it.id + "' data-title='" + (it.n + " " + it.title).toLowerCase() + "'>" +
+                  "<span class='num'>" + (it.n || "•") + "</span><span>" + it.title + "</span></a>";
         });
         html += "</div></div>";
       });
@@ -288,26 +303,25 @@
     }
     function pagerLink(cls, dir, it) {
       if (!it) return "<a class='" + cls + " disabled'></a>";
-      return "<a class='" + cls + "' href='#/" + it.id + "'><span class='dir'>" + dir + "</span>" + it.title + "</a>";
+      var label = (it.n ? it.n + " " : "") + it.title;
+      return "<a class='" + cls + "' href='#/" + it.id + "'><span class='dir'>" + dir + "</span>" + label + "</a>";
     }
     function render() {
-      var id = currentId(), i = INDEX[id], it = FLAT[i];
+      var id = currentId(), i = INDEX[id], it = FLAT[i], gi = GROUP_OF[id];
       document.title = "Bailey — " + it.title;
+      var cnum = it.n ? "<span class='cnum'>" + it.n + "</span>" : "";
       article.innerHTML =
-        "<div class='kicker'>Engineering Standards</div>" +
-        "<h1>" + it.title + "<span class='badge'>Draft</span></h1>" +
+        "<div class='crumb'><span class='tick'>▸</span> " + GROUPS[gi].title + "</div>" +
+        "<h1>" + cnum + it.title + "</h1>" +
         it.body +
-        "<div class='pager'>" +
-        pagerLink("prev", "Previous", FLAT[i - 1]) +
-        pagerLink("next", "Next", FLAT[i + 1]) +
-        "</div>";
-      Array.prototype.forEach.call(navList.querySelectorAll('a'), function (a) {
+        "<div class='pager'>" + pagerLink("prev", "Previous", FLAT[i - 1]) + pagerLink("next", "Next", FLAT[i + 1]) + "</div>";
+      Array.prototype.forEach.call(navList.querySelectorAll('a.item'), function (a) {
         a.classList.toggle('active', a.getAttribute('data-id') === id);
       });
-      if (!document.body.classList.contains('filtering')) openGroup(GROUP_OF[id], false);
+      if (!document.body.classList.contains('filtering')) openGroup(gi, false);
       document.body.classList.remove('nav-open');
       window.scrollTo(0, 0);
-      var active = navList.querySelector('a.active');
+      var active = navList.querySelector('a.item.active');
       if (active) active.scrollIntoView({ block: 'nearest' });
     }
     window.addEventListener('hashchange', render);
@@ -327,13 +341,12 @@
       var q = e.target.value.toLowerCase().trim();
       if (q) {
         document.body.classList.add('filtering');
-        openGroup(-1, true);
         Array.prototype.forEach.call(navList.querySelectorAll('.nav-group'), function (g) { g.classList.remove('collapsed'); });
       } else {
         document.body.classList.remove('filtering');
         openGroup(GROUP_OF[currentId()], true);
       }
-      Array.prototype.forEach.call(navList.querySelectorAll('a'), function (a) {
+      Array.prototype.forEach.call(navList.querySelectorAll('a.item'), function (a) {
         a.style.display = a.getAttribute('data-title').indexOf(q) > -1 ? '' : 'none';
       });
     });
@@ -344,7 +357,7 @@
 
     /* ---------- auto-update on deploy ---------- */
     (function () {
-      var CURRENT = "20260701-134900";
+      var CURRENT = "20260702-213921";
       async function check() {
         try {
           var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
