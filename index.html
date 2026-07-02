@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="build" content="20260702-220500">
+  <meta name="build" content="20260702-222825">
   <title>Bailey — Engineering Design Standards</title>
   <style>
     :root {
@@ -158,6 +158,65 @@
           "<tr><td><code>4.4</code></td><td><strong>Engineering Audit app</strong> (NetSuite-native). See <a href='#/audit-trail'>Release gate &amp; audit</a>.</td></tr>" +
           "<tr><td><code>4.5</code></td><td><strong>Hanomi / successor</strong> — drawing generation, last, on a clean base.</td></tr>" +
           "</tbody></table><p>Parallel track: parametric <strong>Stage-1 load-cascade</strong> automation — separate, must not block Stages 2–3.</p>" },
+      ]},
+      { title: "Get Set Up", items: [
+        { id: "repo-what", n: "", title: "What This Repository Is", body:
+          "<p class='lead'>You do <strong>not</strong> need to learn GitHub to use this. If you can open a web page, you can use the standard today.</p>" +
+          "<h2>In plain terms</h2><ul>" +
+          "<li>Think of the <strong>repository</strong> as a shared, always-current binder in the cloud that holds the Bailey Engineering Design Standards and automatically publishes them as this website.</li>" +
+          "<li><strong>GitHub</strong> is just the service that stores the binder and publishes the site. No account is needed to read it.</li>" +
+          "<li>Every change is <strong>versioned</strong> — nothing is lost, and the site updates itself within about a minute (the page even refreshes on its own).</li>" +
+          "<li>Naveen maintains it (with Claude). <strong>You never have to touch Git</strong> — you read it, and over time you'll drive your SolidWorks work from it.</li></ul>" +
+          "<h2>Open it (the whole setup for reading)</h2><ol>" +
+          "<li>Go to <code>baileycranes.github.io/engineering-standards</code> in any browser.</li>" +
+          "<li>Bookmark it. On a phone, use <em>Add to Home Screen</em>.</li>" +
+          "<li>Use the chapters on the left and the filter box to find a rule.</li></ol>" +
+          "<blockquote>Next: <a href='#/setup-levels'>Set It Up — 3 Levels</a>.</blockquote>" },
+        { id: "setup-levels", n: "", title: "Set It Up — 3 Levels", body:
+          "<p class='lead'>Adopt in low-risk steps. Each level stands on its own — you get value at Level 1 with zero setup.</p>" +
+          "<h2>Level 1 · Read the standard <span style='color:var(--steel)'>(everyone, ~2 min)</span></h2><ol>" +
+          "<li>Open <code>baileycranes.github.io/engineering-standards</code>.</li><li>Bookmark / Add to Home Screen.</li>" +
+          "<li>Find a rule — e.g. the <a href='#/gdt-table'>GD&amp;T decision table</a>.</li></ol>" +
+          "<h2>Level 2 · Ask Claude about the standard <span style='color:var(--steel)'>(no SolidWorks yet)</span></h2><ol>" +
+          "<li>Open Claude (Desktop app or claude.ai).</li>" +
+          "<li>Ask plain questions: <em>&ldquo;Per the Bailey standard, what GD&amp;T control and datums do I use for a bolt-hole pattern?&rdquo;</em></li>" +
+          "<li>Claude answers from the standard.</li></ol>" +
+          "<h2>Level 3 · Connect Claude to SolidWorks <span style='color:var(--steel)'>(the goal; set up once per seat by Naveen / IT)</span></h2>" +
+          "<p><strong>Prereqs:</strong> Windows workstation · licensed SolidWorks seat · Claude Desktop.</p><ol>" +
+          "<li>Install <strong>Claude Desktop</strong> on the workstation.</li>" +
+          "<li>Install the <strong>SolidWorks MCP server</strong> (SolidPilot) per its README — the .NET&nbsp;4.8 execution layer + Python adapter.</li>" +
+          "<li>Register it under <code>mcpServers</code> in Claude Desktop's <code>claude_desktop_config.json</code> (the server's README gives the exact block).</li>" +
+          "<li>Start SolidWorks and open your model.</li>" +
+          "<li>In Claude Desktop, confirm the SolidWorks tools appear.</li></ol>" +
+          "<blockquote class='open'>The SolidWorks bridge is experimental (alpha). Start on <strong>copies</strong> of files and read-only tasks. Naveen / IT owns this setup; engineers just use it once it's running. See <a href='#/troubleshoot'>Troubleshooting</a>.</blockquote>" },
+        { id: "everyday", n: "", title: "Everyday Workflows", body:
+          "<p class='lead'>Describe what you want in plain English; review what Claude proposes. You keep the judgment — <a href='#/attestation'>attestation</a> and <a href='#/hold-dims'>HOLD</a> sign-off stay yours.</p>" +
+          "<table><thead><tr><th>Task</th><th>Say something like&hellip;</th></tr></thead><tbody>" +
+          "<tr><td>Detail a drawing from 3D</td><td>&ldquo;Create the detail drawing for this part per the Bailey standard — standard views, title block, all dimensions, and run the missing-dimension checklist.&rdquo;</td></tr>" +
+          "<tr><td>Apply GD&amp;T</td><td>&ldquo;Apply GD&amp;T using the Bailey <a href='#/gdt-table'>decision table</a> — position at MMC on the hole pattern, perpendicularity on the seating face.&rdquo;</td></tr>" +
+          "<tr><td>Hold points</td><td>&ldquo;Identify the critical dimensions, mark them HOLD per the standard, and list them for sign-off.&rdquo;</td></tr>" +
+          "<tr><td>Interference</td><td>&ldquo;Run interference detection at the 1.5-inch clearance and give me the pairs, gaps, and a pass/fail.&rdquo;</td></tr>" +
+          "</tbody></table><p>Tip: start each session by pointing Claude at this standard so it uses <strong>Bailey's</strong> rules, not generic ones.</p>" },
+        { id: "success", n: "", title: "What Success Looks Like", body:
+          "<p class='lead'>Adoption is a ladder, not a leap. Climb one rung at a time — each rung is a real win with bounded risk.</p>" +
+          "<table><thead><tr><th>Level</th><th>What you can do</th><th>Success signal</th><th>Risk</th></tr></thead><tbody>" +
+          "<tr><td><strong>0 · Read</strong></td><td>Find any rule on the site</td><td>The right rule in under a minute</td><td>None</td></tr>" +
+          "<tr><td><strong>1 · Ask</strong></td><td>Claude answers standard questions</td><td>Faster than flipping pages or asking around</td><td>None</td></tr>" +
+          "<tr><td><strong>2 · Read-only CAD</strong></td><td>Claude runs <a href='#/interference'>interference</a>, extracts dims, reviews a print vs the checklist</td><td>Catch an issue <em>before</em> release</td><td>None (no writes)</td></tr>" +
+          "<tr><td><strong>3 · One write</strong></td><td>Claude auto-dimensions or inserts <a href='#/gdt-table'>GD&amp;T</a> on one file</td><td>A compliant drawing in less time</td><td>Low — work on a copy</td></tr>" +
+          "<tr><td><strong>4 · Routine</strong></td><td>Detail-from-3D + GD&amp;T + interference is your default</td><td>It's simply how you work — logged &amp; compliant</td><td>Managed</td></tr>" +
+          "</tbody></table><p>Most friction disappears when the first Level-2 check catches something real. Get one win, then climb.</p>" },
+        { id: "troubleshoot", n: "", title: "Troubleshooting", body:
+          "<p class='lead'>Common snags and the fix. If a step gets stuck, find the symptom here first.</p>" +
+          "<table><thead><tr><th>Symptom</th><th>Fix</th></tr></thead><tbody>" +
+          "<tr><td>Site shows a 404 or old content</td><td>Wait ~1 min after a change; hard-refresh (<code>Ctrl/Cmd&nbsp;+&nbsp;Shift&nbsp;+&nbsp;R</code>); confirm the URL.</td></tr>" +
+          "<tr><td>&ldquo;Do I need a GitHub account?&rdquo;</td><td>No — not to read the standard.</td></tr>" +
+          "<tr><td>Claude gives generic (non-Bailey) GD&amp;T</td><td>Point it at this standard and say &ldquo;per the Bailey standard&rdquo; so it uses our <a href='#/gdt-table'>decision table</a>.</td></tr>" +
+          "<tr><td>SolidWorks tools don't appear in Claude Desktop</td><td>SolidWorks must be running on a licensed seat; the execution server must be up (default <code>localhost:5000</code>); check <code>claude_desktop_config.json</code>; restart Claude Desktop.</td></tr>" +
+          "<tr><td>Claude changed the wrong thing</td><td>Work on a <strong>copy</strong>; review before saving; keep to one operation at a time (the one-file, one-write-back cap).</td></tr>" +
+          "<tr><td>&ldquo;It's slower than doing it myself&rdquo;</td><td>Normal at first. Start with read-only tasks; the payoff compounds on repetitive dimensioning and GD&amp;T.</td></tr>" +
+          "<tr><td>General resistance / nervousness</td><td>Stay at Level 0&ndash;1 (all upside, no risk). Let one real win build trust before Level 3.</td></tr>" +
+          "</tbody></table>" },
       ]},
       { n: 1, title: "Scope & Fundamentals", items: [
         { id: "scope-covers", n: "1.1", title: "What This Covers", body:
@@ -326,6 +385,7 @@
           "<table><thead><tr><th>Date</th><th>Who</th><th>Entry</th></tr></thead><tbody>" +
           "<tr><td><code>2026-07-02</code></td><td>Naveen</td><td>Added the <strong>Log</strong> chapter.</td></tr>" +
           "<tr><td><code>2026-07-02</code></td><td>Claude (draft)</td><td>Drafted the full <a href='#/gdt-table'>GD&amp;T decision table</a> (&sect;3.2) and expanded <a href='#/gdt-datums'>datums &amp; stack-up</a> (&sect;3.3). Closes open action #4, pending Tony/Keegan review.</td></tr>" +
+          "<tr><td><code>2026-07-02</code></td><td>Naveen</td><td>Added the <a href='#/repo-what'>Get Set Up</a> section — repository explainer, 3-level setup, everyday workflows, success ladder, and troubleshooting — for engineer onboarding.</td></tr>" +
           "</tbody></table>" },
       ]},
     ];
@@ -421,7 +481,7 @@
 
     /* ---------- auto-update on deploy ---------- */
     (function () {
-      var CURRENT = "20260702-220500";
+      var CURRENT = "20260702-222825";
       async function check() {
         try {
           var res = await fetch(location.pathname + "?_=" + Date.now(), { cache: "no-store" });
